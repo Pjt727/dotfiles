@@ -40,11 +40,6 @@ config.colors = {
 -- key rebinds
 config.keys = {
     {
-        key = 'w',
-        mods = 'CTRL',
-        action = wezterm.action.CloseCurrentTab { confirm = true },
-    },
-    {
         key = 't',
         mods = 'CTRL',
         action = wezterm.action.SpawnTab 'CurrentPaneDomain'
@@ -56,20 +51,20 @@ config.keys = {
     },
 }
 -- relook at this to try to get a good close functionality
-wezterm.on('mux-is-process-stateful', function(proc)
-    -- Just use the default behavior
-
-    wezterm.log_info(proc.command)
-    if proc.command == "nvim" or proc.command == "neovim" then
-        -- Check if the process is still running
-        if proc:poll() then
-            return true
-        else
-            return true
-        end
-    end
-    return false
-end)
+-- wezterm.on('mux-is-process-stateful', function(proc)
+--     -- Just use the default behavior
+--
+--     wezterm.log_info(proc.command)
+--     if proc.command == "nvim" or proc.command == "neovim" then
+--         -- Check if the process is still running
+--         if proc:poll() then
+--             return true
+--         else
+--             return true
+--         end
+--     end
+--     return false
+-- end)
 
 -- and finally, return the configuration to wezterm
 return config

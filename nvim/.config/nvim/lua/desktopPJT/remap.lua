@@ -137,3 +137,8 @@ vim.cmd('command! RunSql lua RunSQL()')
 
 vim.api.nvim_set_keymap('n', '<leader>rs', ':lua RunSQL()<CR>', { noremap = true })
 vim.cmd('command! RunSqlCsv lua RunSqlCsv()')
+
+
+-- UNMAPPING KEYMAPS THAT MESS ME Up
+vim.api.nvim_del_keymap('n', '<C-W><C-D>')
+vim.api.nvim_del_keymap('n', '<C-W>d')
