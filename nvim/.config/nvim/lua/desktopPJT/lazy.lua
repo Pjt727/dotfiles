@@ -69,13 +69,13 @@ local plugins = {
         end
     },
     -- preview markdown
-    {
-        "iamcco/markdown-preview.nvim",
-        event = "VeryLazy",
-        cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-        ft = { "markdown" },
-        build = function() vim.fn["mkdp#util#install"]() end,
-    },
+    -- {
+    --     "iamcco/markdown-preview.nvim",
+    --     event = "VeryLazy",
+    --     cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    --     ft = { "markdown" },
+    --     build = function() vim.fn["mkdp#util#install"]() end,
+    -- },
     -- copy and paste images
     {
         "HakonHarnes/img-clip.nvim",

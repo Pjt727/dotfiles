@@ -10,6 +10,9 @@ local config = wezterm.config_builder()
 config.color_scheme = 'rose-pine'
 config.window_background_opacity = .99
 
+config.font = wezterm.font('Fira Code', { weight = 'Regular' })
+config.font_size = 12.2
+
 
 config.default_cwd = "/home/pjt727/coding"
 
@@ -26,16 +29,6 @@ config.colors = {
     selection_fg = "#d7827e", -- Set the selection text color to white
 }
 
--- wezterm.on("gui-startup", function(cmd)
---     local screen = wezterm.gui.screens().main
---     local ratio = 0.7
---     local width, height = screen.width * ratio, screen.height * ratio
---     local tab, pane, window = wezterm.mux.spawn_window(cmd or {
---         position = { x = (screen.width - width) / 2, y = (screen.height - height) / 2 },
---     })
---     -- window:gui_window():maximize()
---     window:gui_window():set_inner_size(width, height)
--- end)
 
 -- key rebinds
 config.keys = {
@@ -50,21 +43,4 @@ config.keys = {
         action = wezterm.action.ActivateCopyMode
     },
 }
--- relook at this to try to get a good close functionality
--- wezterm.on('mux-is-process-stateful', function(proc)
---     -- Just use the default behavior
---
---     wezterm.log_info(proc.command)
---     if proc.command == "nvim" or proc.command == "neovim" then
---         -- Check if the process is still running
---         if proc:poll() then
---             return true
---         else
---             return true
---         end
---     end
---     return false
--- end)
-
--- and finally, return the configuration to wezterm
 return config
