@@ -29,7 +29,6 @@ vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
 vim.keymap.set('i', '<C-v>', '<Esc>"+p')
 
-vim.keymap.set("n", "<Leader>s", ":vsplit<CR>")
 
 vim.keymap.set({ "n", "v", "i" }, "<C-n>", "<C-w>w")
 vim.keymap.set("n", "<leader>qs", ":close<CR>")
