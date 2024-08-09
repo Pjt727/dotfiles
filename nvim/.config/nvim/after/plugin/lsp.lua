@@ -4,7 +4,7 @@ local lsp = require('lsp-zero')
 require("mason").setup()
 local mason_config = require("mason-lspconfig")
 mason_config.setup {
-    ensure_installed = { "lua_ls", "pyright", "rust_analyzer", "html", "tsserver", "texlab" },
+    ensure_installed = { "lua_ls", "pyright", "rust_analyzer", "html", "tsserver", "texlab", "htmx" },
     handlers = {
         lsp.default_setup,
         lua_ls = function()
@@ -12,6 +12,11 @@ mason_config.setup {
             require('lspconfig').lua_ls.setup(lua_opts)
         end,
         html = function()
+            require('lspconfig').html.setup({
+                filetypes = { "html", "htmldjango" },
+            })
+        end,
+        htmx = function()
             require('lspconfig').html.setup({
                 filetypes = { "html", "htmldjango" },
             })
@@ -49,7 +54,45 @@ lsp.preset("recommended")
 local cmp = require('cmp')
 local cmp_action = require('lsp-zero').cmp_action()
 
+local function python_lsp_sorter(items)
+    local dunders = {}
+    local others = {}
+    for _, item in ipairs(items) do
+        if string.match(item.label, "^__.*__$") then
+            table.insert(dunders, item)
+        else
+            table.insert(others, item)
+        end
+    end
+    -- return {}
+    -- return vim.list_extend(others, dunders)
+end
+local function is_dunder(entry1, entry2)
+    local _, entry1_under = entry1.completion_item.label:find "^_+"
+    local _, entry2_under = entry2.completion_item.label:find "^_+"
+    entry1_under = entry1_under or 0
+    entry2_under = entry2_under or 0
+    if entry1_under > entry2_under then
+        return false
+    elseif entry1_under < entry2_under then
+        return true
+    end
+end
+
 cmp.setup({
+    sorting = {
+        comparators = {
+            cmp.config.compare.offset,
+            cmp.config.compare.exact,
+            cmp.config.compare.score,
+            cmp.config.compare.recently_used,
+            is_dunder,
+            cmp.config.compare.kind,
+            cmp.config.compare.sort_text,
+            cmp.config.compare.length,
+            cmp.config.compare.order,
+        }
+    },
     window = {
         completion = cmp.config.window.bordered(),
         documentation = cmp.config.window.bordered(),

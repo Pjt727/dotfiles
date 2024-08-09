@@ -8,7 +8,7 @@ local config = wezterm.config_builder()
 
 -- For example, changing the color scheme:
 config.color_scheme = 'rose-pine'
-config.window_background_opacity = .99
+config.window_background_opacity = .995
 
 config.font = wezterm.font('Fira Code', { weight = 'Regular' })
 config.font_size = 12.2
