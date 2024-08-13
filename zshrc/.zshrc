@@ -45,8 +45,7 @@ source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # not too sure how I feel about this but is def sometimes nice
 # can be a little distracting (maybe make it togglable)
-# source $(brew --prefix)/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+# source zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
-
