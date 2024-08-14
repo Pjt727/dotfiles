@@ -245,7 +245,36 @@ local plugins = {
             { "<leader>s", function() require("snipe").open_buffer_menu() end, desc = "Open Snipe buffer menu" }
         },
         opts = {}
-    }
+    },
+    {
+        'Vonr/align.nvim',
+        branch = "v2",
+        lazy = true,
+        init = function()
+            vim.keymap.set(
+                'x',
+                'aw',
+                function()
+                    require 'align'.align_to_string({
+                        preview = true,
+                        regex = false,
+                    })
+                end,
+                NS
+            )
+            vim.keymap.set(
+                'x',
+                'ar',
+                function()
+                    require 'align'.align_to_string({
+                        preview = true,
+                        regex = true,
+                    })
+                end,
+                NS
+            )
+        end
+    },
 }
 
 local opts = {}
