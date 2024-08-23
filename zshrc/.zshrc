@@ -11,6 +11,10 @@ alias ll="ls -alF"
 alias cd="z"
 alias cdi="zi"
 alias python="python3"
+# custom keybinds
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+
 ## python environments
 # Customize the Zsh prompt to include the virtual environment name
 # checks to see if there is a venv in this dir or a parent one
