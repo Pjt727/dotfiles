@@ -54,19 +54,6 @@ lsp.preset("recommended")
 local cmp = require('cmp')
 local cmp_action = require('lsp-zero').cmp_action()
 
-local function python_lsp_sorter(items)
-    local dunders = {}
-    local others = {}
-    for _, item in ipairs(items) do
-        if string.match(item.label, "^__.*__$") then
-            table.insert(dunders, item)
-        else
-            table.insert(others, item)
-        end
-    end
-    -- return {}
-    -- return vim.list_extend(others, dunders)
-end
 local function is_dunder(entry1, entry2)
     local _, entry1_under = entry1.completion_item.label:find "^_+"
     local _, entry2_under = entry2.completion_item.label:find "^_+"
