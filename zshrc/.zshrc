@@ -3,6 +3,8 @@
 # no brew message
 export HOMEBREW_NO_ENV_HINTS=true
 
+[ -f "/home/pjt727/.ghcup/env" ] && . "/home/pjt727/.ghcup/env" # ghcup-env
+
 export PATH="$PATH"
 source /home/pjt727/secrets.zsh
 
@@ -53,3 +55,4 @@ source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
+
