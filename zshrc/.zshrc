@@ -5,7 +5,7 @@ export HOMEBREW_NO_ENV_HINTS=true
 
 [ -f "/home/pjt727/.ghcup/env" ] && . "/home/pjt727/.ghcup/env" # ghcup-env
 
-export PATH="$PATH:/home/pjt727/.local/bin"
+export PATH="$PATH:/home/pjt727/.local/bin:/home/pjt727/.cargo/bin/"
 source /home/pjt727/secrets.zsh
 
 # alias and custom functions
