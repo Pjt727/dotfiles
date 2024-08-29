@@ -1,7 +1,8 @@
 [user]
-	email = patrick@nytyler.com
+	email = Patrick@nytyler.com
+	name = Patrick
 [core]
-	editor = nvim
+    editor = nvim
 [credential "https://github.com"]
 	helper = 
 	helper = !/usr/bin/gh auth git-credential
