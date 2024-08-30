@@ -1,0 +1,2 @@
+#!/bin/bash
+yay -S linux-headers nvidia-dkms qt5-wayland qt5ct libva libva-nvidia-driver-git
