@@ -286,6 +286,7 @@ local plugins = {
             vim.g.molten_output_win_max_height = 20
         end,
     },
+    { "nvim-telescope/telescope-symbols.nvim" },
 }
 
 local opts = {}
