@@ -13,6 +13,8 @@ alias ll="ls -alF"
 alias cd="z"
 alias cdi="zi"
 alias python="python3"
+alias bu="brightnessctl set 10%+"
+alias bd="brightnessctl set 10%-"
 # custom keybinds
 bindkey "^[[1;5C" forward-word
 bindkey "^[[1;5D" backward-word
