@@ -4,7 +4,7 @@ local lsp = require('lsp-zero')
 require("mason").setup()
 local mason_config = require("mason-lspconfig")
 mason_config.setup {
-    ensure_installed = { "lua_ls", "pyright", "rust_analyzer", "html", "tsserver", "texlab", "htmx" },
+    ensure_installed = { "lua_ls", "pyright", "rust_analyzer", "html", "tsserver", "htmx"},
     handlers = {
         lsp.default_setup,
         lua_ls = function()
@@ -44,9 +44,18 @@ local linter = require('lint')
 
 linter.linters_by_ft = {
     htmldjango = { 'djlint', },
+    -- markdown = { 'vale', },
 }
 
-linter.get_running()
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+  callback = function()
+    -- try_lint without arguments runs the linters defined in `linters_by_ft`
+    -- for the current filetype
+    require("lint").try_lint()
+  end,
+})
+
+-- linter.get_running()
 
 
 lsp.preset("recommended")
