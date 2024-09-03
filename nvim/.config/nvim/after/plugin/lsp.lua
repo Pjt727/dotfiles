@@ -4,7 +4,7 @@ local lsp = require('lsp-zero')
 require("mason").setup()
 local mason_config = require("mason-lspconfig")
 mason_config.setup {
-    ensure_installed = { "lua_ls", "pyright", "rust_analyzer", "html", "tsserver", "htmx"},
+    ensure_installed = { "lua_ls", "rust_analyzer", "html", "tsserver", "htmx"},
     handlers = {
         lsp.default_setup,
         lua_ls = function()
@@ -29,16 +29,6 @@ mason_config.setup {
     }
 }
 
--- lsp.format_on_save({
---     format_opts = {
---         async = false,
---         timeout_ms = 10000,
---     },
---     servers = {
---         ['pyright'] = { 'python' },
---         ['rust_analyzer'] = { 'rust' },
---     }
--- })
 
 local linter = require('lint')
 
