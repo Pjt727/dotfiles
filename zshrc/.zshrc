@@ -55,6 +55,8 @@ source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 # can be a little distracting (maybe make it togglable)
 # source zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
+eval $(thefuck --alias tf)
+
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 
