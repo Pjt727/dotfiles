@@ -6,6 +6,7 @@
   "auto-pairs": { "branch": "master", "commit": "39f06b873a8449af8ff6a3eee716d3da14d63a76" },
   "cmp-nvim-lsp": { "branch": "main", "commit": "5af77f54de1b16c34b23cba810150689a3a90312" },
   "conform.nvim": { "branch": "master", "commit": "12b3995537f52ba2810a9857e8ca256881febbda" },
+  "curl.nvim": { "branch": "main", "commit": "e3e70d8b2cce6b45291a25156fbb50921e3ae941" },
   "harpoon": { "branch": "harpoon2", "commit": "0378a6c428a0bed6a2781d459d7943843f374bce" },
   "image.nvim": { "branch": "master", "commit": "4007cddc4cfc1b5ddd49744a38362e7b0432b3a0" },
   "img-clip.nvim": { "branch": "main", "commit": "fc30500c35663aa1762697f5aba31d43b86028f0" },

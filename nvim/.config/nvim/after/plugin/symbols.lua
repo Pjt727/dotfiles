@@ -1,2 +1,1 @@
-vim.keymap.set("i", "<C-s>", "<cmd>lua require'telescope.builtin'.symbols{ sources = {'math'} }<cr>")
-
+vim.keymap.set("i", "<C-s>", "<cmd>lua require'telescope.builtin'.symbols{ sources = {'math', 'emoji'} }<cr>")

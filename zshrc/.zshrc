@@ -8,10 +8,20 @@ export HOMEBREW_NO_ENV_HINTS=true
 export PATH="$PATH:/home/pjt727/.local/bin:/home/pjt727/.cargo/bin/"
 source /home/pjt727/secrets.zsh
 
+define_word() {
+    curl "https://api.dictionaryapi.dev/api/v2/entries/en/$1" | jq '.[0].meanings[].definitions[].definition'
+}
+syn_word() {
+    curl "https://api.dictionaryapi.dev/api/v2/entries/en/$1" | jq '.[0].meanings[].synonyms'
+}
+
 # alias and custom functions
+alias def=define_word
+alias syn=syn_word
 alias ll="ls -alF"
 alias cd="z"
 alias cdi="zi"
+alias zf="zoxide query"
 alias python="python3"
 alias bu="brightnessctl set 10%+"
 alias bd="brightnessctl set 10%-"
