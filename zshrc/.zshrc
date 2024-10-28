@@ -69,4 +69,10 @@ eval $(thefuck --alias tf)
 
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
+#
+# bun completions
+[ -s "/home/pjt727/.bun/_bun" ] && source "/home/pjt727/.bun/_bun"
 
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
