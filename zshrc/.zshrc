@@ -5,7 +5,10 @@ export HOMEBREW_NO_ENV_HINTS=true
 
 [ -f "/home/pjt727/.ghcup/env" ] && . "/home/pjt727/.ghcup/env" # ghcup-env
 
-export PATH="$PATH:/home/pjt727/.local/bin:/home/pjt727/.cargo/bin/"
+export PATH="$PATH:/home/pjt727/.local/bin:/home/pjt727/.cargo/bin/:/home/pjt727/.custom-scripts/"
+
+# nnn plugins
+export NNN_PLUG="f:autojump"
 source /home/pjt727/secrets.zsh
 
 define_word() {
