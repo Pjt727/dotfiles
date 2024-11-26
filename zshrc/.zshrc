@@ -8,7 +8,10 @@ export HOMEBREW_NO_ENV_HINTS=true
 export PATH="$PATH:/home/pjt727/.local/bin:/home/pjt727/.cargo/bin/:/home/pjt727/.custom-scripts/"
 
 # nnn plugins
-export NNN_PLUG="f:autojump"
+export NNN_PLUG="f:autojump;p:preview-tui"
+export NNN_FIFO=/tmp/nnn.fifo
+
+# secrets
 source /home/pjt727/secrets.zsh
 
 define_word() {
@@ -22,6 +25,8 @@ syn_word() {
 alias def=define_word
 alias syn=syn_word
 alias ll="ls -alF"
+alias icat="kitten icat"
+alias n="nnn"
 alias cd="z"
 alias cdi="zi"
 alias zf="zoxide query"
