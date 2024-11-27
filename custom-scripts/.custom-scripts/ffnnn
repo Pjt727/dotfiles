@@ -1,0 +1,17 @@
+#!/bin/sh
+save="$3"
+suggest="$4"
+out="$5"
+file="${suggest##/*/}"
+
+if [ "$save" = 1 ]; then
+    touch "$suggest"
+fi
+
+kitty --class picker sh -c "nnn -p - '$suggest' | awk '{ print system(\"[ -d '\''\"\$0\"'\'' ]\") ? \$0 : \$0\"/$file\" }' > '$out'"
+
+if [ "$save" = 1 ]; then
+    if [ ! -s "$out" ] || [ ! -s "$suggest" ]; then
+        rm "$suggest" 
+    fi
+fi
