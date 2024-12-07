@@ -1,8 +1,4 @@
 #!/bin/sh
-# https://github.com/jarun/nnn/wiki/Advanced-use-cases nnn browser integration
-# Also nee to wrap the browser binary
-# #!/bin/sh
-# XDG_CURRENT_DESKTOP=KDE <browser binary> "$@"
 while :; do case $1 in
     --getsavefilename) file="$2" break ;;
     --version) printf ""; exit ;;

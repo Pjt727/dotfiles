@@ -1,2 +1,0 @@
-#!/bin/sh
-XDG_CURRENT_DESKTOP=KDE google-chrome-stable "$@" > /dev/null 2>&1   &
