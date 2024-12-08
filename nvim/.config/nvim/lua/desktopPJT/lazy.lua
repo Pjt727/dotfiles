@@ -92,7 +92,7 @@ local plugins = {
 	--CHAT GPT
 	{
 		"jackMort/ChatGPT.nvim",
-		event = "VeryLazy",
+		cmd = "ChatGPT",
 		dependencies = {
 			"MunifTanjim/nui.nvim",
 			"nvim-lua/plenary.nvim",
