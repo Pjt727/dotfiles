@@ -27,8 +27,9 @@ vim.api.nvim_set_keymap("i", "<C-c>", "<Esc>", { noremap = true, silent = true }
 -- SYSTEM CLIP board
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
 vim.keymap.set("n", "<leader>Y", [["+Y]])
-vim.keymap.set('i', '<C-v>', '<Esc>"+p')
-
+-- getting used to a keyboard
+vim.keymap.set('i', '<C-v>', '<cmd>!echo dont do that<cr>')
+vim.keymap.set('i', '<C-b>', '<cmd>!echo dont do that<cr>')
 
 vim.keymap.set({ "n", "v", "i" }, "<C-n>", "<C-w>w")
 vim.keymap.set("n", "<leader>qs", ":close<CR>")

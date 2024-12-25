@@ -1,7 +1,6 @@
 # Created by newuser for 5.9
 
-# no brew message
-export HOMEBREW_NO_ENV_HINTS=true
+# no brew message export HOMEBREW_NO_ENV_HINTS=true
 
 [ -f "/home/pjt727/.ghcup/env" ] && . "/home/pjt727/.ghcup/env" # ghcup-env
 
@@ -34,8 +33,11 @@ alias python="python3"
 alias bu="brightnessctl set 10%+"
 alias bd="brightnessctl set 10%-"
 # custom keybinds
-bindkey "^[[1;5C" forward-word
+bindkey "^[[2;5C" forward-word
 bindkey "^[[1;5D" backward-word
+# this is a crutch as I get used to my keyboard
+#this may make it a lot more annoying to work wihtout this keybind but whatever
+bindkey "^V" send-break
 
 ## python environments
 # Customize the Zsh prompt to include the virtual environment name
@@ -83,4 +85,4 @@ eval "$(zoxide init zsh)"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+export PATH="$BUNNSTALL/bin:$PATH"

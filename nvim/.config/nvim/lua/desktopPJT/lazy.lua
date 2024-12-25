@@ -291,6 +291,7 @@ local plugins = {
 		},
 		config = true,
 	},
+	{ "jsborjesson/vim-uppercase-sql" },
 }
 
 local opts = {}
