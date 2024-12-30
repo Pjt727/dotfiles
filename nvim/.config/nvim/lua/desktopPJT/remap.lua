@@ -87,3 +87,4 @@ vim.cmd('command! ResetSchema lua ResetSchema()')
 -- UNMAPPING KEYMAPS THAT MESS ME Up
 vim.api.nvim_del_keymap('n', '<C-W><C-D>')
 vim.api.nvim_del_keymap('n', '<C-W>d')
+

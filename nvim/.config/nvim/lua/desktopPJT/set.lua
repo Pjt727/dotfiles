@@ -29,3 +29,10 @@ vim.g.omni_sql_no_default_maps = 1
 -- set up local nvim config for repors
 vim.o.exrc = true
 vim.o.secure = true
+
+-- http files
+vim.filetype.add({
+  extension = {
+    ['http'] = 'http',
+  },
+})

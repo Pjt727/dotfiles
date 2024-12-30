@@ -292,6 +292,7 @@ local plugins = {
 		config = true,
 	},
 	{ "jsborjesson/vim-uppercase-sql" },
+    { 'mistweaverco/kulala.nvim'},
 }
 
 local opts = {}
