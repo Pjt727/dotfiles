@@ -1,10 +1,10 @@
-# Created by newuser for 5.9
+# Created by newuser for 6.9
 
 # no brew message export HOMEBREW_NO_ENV_HINTS=true
 
 [ -f "/home/pjt727/.ghcup/env" ] && . "/home/pjt727/.ghcup/env" # ghcup-env
 
-export PATH="$PATH:/home/pjt727/.local/bin:/home/pjt727/.cargo/bin/:/home/pjt727/.custom-scripts/"
+export PATH="$PATH:/home/pjt727/.local/bin:/home/pjt727/.cargo/bin/:/home/pjt727/.custom-scripts/:/home/pjt727/go/bin"
 
 # nnn plugins
 export NNN_PLUG="f:autojump;p:preview-tui"
