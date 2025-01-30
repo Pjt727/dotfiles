@@ -1,10 +1,16 @@
 # Created by newuser for 6.9
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUNNSTALL/bin:$PATH"
 
 # no brew message export HOMEBREW_NO_ENV_HINTS=true
 
 [ -f "/home/pjt727/.ghcup/env" ] && . "/home/pjt727/.ghcup/env" # ghcup-env
 
 export PATH="$PATH:/home/pjt727/.local/bin:/home/pjt727/.cargo/bin/:/home/pjt727/.custom-scripts/:/home/pjt727/go/bin"
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUNNSTALL/bin:$PATH"
 
 # nnn plugins
 export NNN_PLUG="f:autojump;p:preview-tui"
@@ -22,10 +28,11 @@ syn_word() {
 
 # alias and custom functions
 alias def=define_word
+alias pkgInfo="pacman -Qq | fzf --preview 'pacman -Qil {} | bat -fpl yml' --layout=reverse  --bind 'enter:execute(pacman -Qil {} | less)"
 alias syn=syn_word
 alias ll="ls -alF"
 alias icat="kitten icat"
-alias n="nnn"
+alias gf="git add . & git commit . -m FastCommit & git push"
 alias cd="z"
 alias cdi="zi"
 alias zf="zoxide query"
@@ -83,6 +90,3 @@ eval "$(zoxide init zsh)"
 # bun completions
 [ -s "/home/pjt727/.bun/_bun" ] && source "/home/pjt727/.bun/_bun"
 
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUNNSTALL/bin:$PATH"

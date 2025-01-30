@@ -2,11 +2,24 @@
 -- I still dont know why it still happens but only sometimes
 local lsp = require("lsp-zero")
 require("mason").setup()
+
 local mason_config = require("mason-lspconfig")
 mason_config.setup({
-	ensure_installed = { "lua_ls", "rust_analyzer", "html", "tsserver", "htmx" },
+	ensure_installed = { "lua_ls", "rust_analyzer", "html", "tsserver", "htmx", "ltex" },
 	handlers = {
 		lsp.default_setup,
+		ltex = function()
+			require("lspconfig").ltex.setup({
+				capabilities = {},
+				on_attach = function(client, bufnr)
+					-- rest of your on_attach process.
+					require("ltex_extra").setup({})
+				end,
+				settings = {
+					ltex = {},
+				},
+			})
+		end,
 		lua_ls = function()
 			local lua_opts = lsp.nvim_lua_ls()
 			require("lspconfig").lua_ls.setup(lua_opts)
@@ -40,6 +53,10 @@ mason_config.setup({
 			})
 		end,
 	},
+})
+
+require("lspconfig").grammarly.setup({
+	cmd = { "n", "run", "16", "/home/pjt727/.local/share/nvim/mason/bin/grammarly-languageserver", "--stdio" },
 })
 
 local linter = require("lint")
