@@ -3,8 +3,8 @@ require("conform").setup({
 		-- Conform will run multiple formatters sequentially
 		lua = { "stylua" },
 		python = { "ruff_format" },
-		-- Use a sub-list to run only the first available formatter
-		javascript = { { "prettierd", "prettier" } },
+		hmtl = { "prettierd" },
+		javascript = { "prettierd" },
 		rust = { "rustfmt" },
 		golang = { "gofmt" },
 		go = { "gofmt", "golines" },
