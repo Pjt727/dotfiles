@@ -97,13 +97,31 @@ local plugins = {
 		},
 	},
 	--CHAT GPT
+	-- {
+	-- 	"jackMort/ChatGPT.nvim",
+	-- 	cmd = "ChatGPT",
+	-- 	dependencies = {
+	-- 		"MunifTanjim/nui.nvim",
+	-- 		"nvim-lua/plenary.nvim",
+	-- 		"folke/trouble.nvim",
+	-- 		"nvim-telescope/telescope.nvim",
+	-- 	},
+	-- },
 	{
-		"jackMort/ChatGPT.nvim",
-		cmd = "ChatGPT",
+		"huynle/ogpt.nvim",
+		event = "VeryLazy",
+		opts = {
+			default_provider = "ollama",
+			providers = {
+				gemini = {
+					api_host = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent",
+					api_key = os.getenv("GEMINI_API_KEY"),
+				},
+			},
+		},
 		dependencies = {
 			"MunifTanjim/nui.nvim",
 			"nvim-lua/plenary.nvim",
-			"folke/trouble.nvim",
 			"nvim-telescope/telescope.nvim",
 		},
 	},
