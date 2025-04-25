@@ -1,1 +1,0 @@
--- vim.keymap.set("n", "<Leader>ch", "<CMD>OGPT<CR>", { desc = "Open Chat OGPT" })

@@ -3,26 +3,28 @@
 local lsp = require("lsp-zero")
 require("mason").setup()
 
+local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+
+vim.lsp.util.open_floating_preview = function(contents, syntax, opts, ...)
+	opts = opts or {}
+	opts.border = opts.border or "rounded"
+	opts.title = ""
+	return orig_util_open_floating_preview(contents, syntax, opts, ...)
+end
+
 local mason_config = require("mason-lspconfig")
 mason_config.setup({
-	ensure_installed = { "lua_ls", "rust_analyzer", "html", "ts_ls", "htmx", "ltex" },
+	ensure_installed = { "lua_ls", "rust_analyzer", "html", "ts_ls", "htmx", "emmet_language_server" },
 	handlers = {
 		lsp.default_setup,
-		ltex = function()
-			require("lspconfig").ltex.setup({
-				capabilities = {},
-				on_attach = function(client, bufnr)
-					-- rest of your on_attach process.
-					require("ltex_extra").setup({})
-				end,
-				settings = {
-					ltex = {},
-				},
-			})
-		end,
 		lua_ls = function()
 			local lua_opts = lsp.nvim_lua_ls()
 			require("lspconfig").lua_ls.setup(lua_opts)
+		end,
+		emmet_language_server = function()
+			require("lspconfig").emmet_language_server.setup({
+				filetypes = { "html", "htmldjango", "templ" },
+			})
 		end,
 		html = function()
 			require("lspconfig").html.setup({
@@ -123,6 +125,7 @@ cmp.setup({
 		{ name = "luasnip" }, -- WHY CANT I GET LUASNIP TO WORK???
 		{ name = "buffer" },
 		{ name = "path" },
+		{ name = "codecompanion" },
 	}),
 })
 -- setup vim-dadbod
@@ -155,12 +158,6 @@ lsp.on_attach(function(client, bufnr)
 	vim.keymap.set("n", "<leader>vd", function()
 		vim.diagnostic.open_float()
 	end, opts)
-	vim.keymap.set("n", "[d", function()
-		vim.diagnostic.goto_next()
-	end, opts)
-	vim.keymap.set("n", "]d", function()
-		vim.diagnostic.goto_prev()
-	end, opts)
 	vim.keymap.set("n", "<leader>ca", function()
 		vim.lsp.buf.code_action()
 	end, opts)
@@ -182,3 +179,37 @@ lsp.setup()
 vim.diagnostic.config({
 	virtual_text = true,
 })
+
+-- templ
+-- Register the language
+vim.filetype.add({
+	extension = {
+		templ = "templ",
+	},
+})
+
+-- Make sure we have a tree-sitter grammar for the language
+local treesitter_parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+treesitter_parser_config.templ = treesitter_parser_config.templ
+	or {
+		install_info = {
+			url = "https://github.com/vrischmann/tree-sitter-templ.git",
+			files = { "src/parser.c", "src/scanner.c" },
+			branch = "master",
+		},
+	}
+
+vim.treesitter.language.register("templ", "templ")
+
+-- Register the LSP as a config
+local configs = require("lspconfig.configs")
+if not configs.templ then
+	configs.templ = {
+		default_config = {
+			cmd = { "templ", "lsp" },
+			filetypes = { "templ" },
+			root_dir = require("lspconfig.util").root_pattern("go.mod", ".git"),
+			settings = {},
+		},
+	}
+end
