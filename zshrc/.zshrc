@@ -89,5 +89,3 @@ eval "$(zoxide init zsh)"
 #
 # bun completions
 [ -s "/home/pjt727/.bun/_bun" ] && source "/home/pjt727/.bun/_bun"
-
-. "/home/pjt727/.deno/env"

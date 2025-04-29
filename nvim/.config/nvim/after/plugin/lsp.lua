@@ -14,7 +14,7 @@ end
 
 local mason_config = require("mason-lspconfig")
 mason_config.setup({
-	ensure_installed = { "lua_ls", "rust_analyzer", "html", "ts_ls", "htmx", "emmet_language_server" },
+	ensure_installed = { "lua_ls", "rust_analyzer", "html", "htmx", "emmet_language_server" },
 	handlers = {
 		lsp.default_setup,
 		lua_ls = function()
@@ -34,11 +34,6 @@ mason_config.setup({
 		htmx = function()
 			require("lspconfig").html.setup({
 				filetypes = { "html", "htmldjango" },
-			})
-		end,
-		ts_ls = function()
-			require("lspconfig").ts_ls.setup({
-				filetypes = { "htmldjango", "javascript", "html", "typescript" },
 			})
 		end,
 		pylsp = function()
