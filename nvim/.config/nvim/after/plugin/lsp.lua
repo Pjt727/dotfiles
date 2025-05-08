@@ -14,7 +14,7 @@ end
 
 local mason_config = require("mason-lspconfig")
 mason_config.setup({
-	ensure_installed = { "lua_ls", "rust_analyzer", "html", "htmx", "emmet_language_server" },
+	ensure_installed = { "lua_ls", "rust_analyzer", "html", "htmx", "emmet_language_server", "templ" },
 	handlers = {
 		lsp.default_setup,
 		lua_ls = function()
@@ -33,7 +33,7 @@ mason_config.setup({
 		end,
 		htmx = function()
 			require("lspconfig").html.setup({
-				filetypes = { "html", "htmldjango" },
+				filetypes = { "html", "htmldjango", "templ" },
 			})
 		end,
 		pylsp = function()
@@ -93,7 +93,6 @@ end
 cmp.setup({
 	sorting = {
 		comparators = {
-			cmp.config.compare.offset,
 			cmp.config.compare.exact,
 			cmp.config.compare.score,
 			cmp.config.compare.recently_used,

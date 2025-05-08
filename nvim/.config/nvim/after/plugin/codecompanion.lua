@@ -1,3 +1,17 @@
+-- require("codecompanion.completion").slash_commands()
+--
+-- local fetch_item = nil
+-- for _, s in require("codecompanion.completion").slash_commands() do
+-- 	if s.config.label == "/fetch" then
+-- 		fetch_item = s
+-- 		break
+-- 	end
+-- end
+-- vim.api.nvim_create_user_command("InsertUrl", function()
+-- 	local chat = require("codecompanion").buf_get_chat(vim.api.get_current_buf())
+-- 	require("codecompanion.completion").slash_commands_execute(fetch_item, chat)
+-- end, {})
+
 require("codecompanion").setup({
 	strategies = {
 		chat = {
@@ -7,6 +21,18 @@ require("codecompanion").setup({
 					modes = { n = "<C-m>", i = "<C-m>" },
 				},
 				-- Add further custom keymaps here
+			},
+			slash_commands = {
+				["file"] = {
+					opts = {
+						provider = "telescope", -- default|telescope|mini_pick|fzf_lua
+					},
+				},
+				["buffer"] = {
+					opts = {
+						provider = "telescope", -- default|telescope|mini_pick|fzf_lua
+					},
+				},
 			},
 		},
 	},
@@ -75,7 +101,11 @@ require("codecompanion").setup({
 				return " (" .. tokens .. " tokens)"
 			end,
 		},
+		action_palette = {
+			provider = "telescope",
+		},
 	},
+
 	extensions = {
 		mcphub = {
 			callback = "mcphub.extensions.codecompanion",
@@ -90,4 +120,3 @@ require("codecompanion").setup({
 
 vim.keymap.set("n", "<Leader>h", "<CMD>CodeCompanionChat Toggle<CR>", { desc = "Open Chat GTP" })
 vim.keymap.set("v", "<Leader>h", "<cmd>CodeCompanionChat Toggle<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<Leader>ch", "<cmd>CodeCompanionChat <cr>", { noremap = true, silent = true })
