@@ -39,6 +39,7 @@ alias zf="zoxide query"
 alias python="python3"
 alias bu="brightnessctl set 10%+"
 alias bd="brightnessctl set 10%-"
+alias cat="bat"
 # custom keybinds
 bindkey "^[[2;5C" forward-word
 bindkey "^[[1;5D" backward-word

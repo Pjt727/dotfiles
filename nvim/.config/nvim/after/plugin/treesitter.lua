@@ -1,3 +1,32 @@
+local function should_disable_treesitter(bufnr)
+    local max_lines = 5000       -- Adjust this value as needed
+    local max_line_length = 1000 -- Adjust this value as needed
+
+    local line_count = vim.api.nvim_buf_line_count(bufnr)
+    if line_count > max_lines then
+        return true
+    end
+
+    local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+    for _, line in ipairs(lines) do
+        if string.len(line) > max_line_length then
+            return true
+        end
+    end
+
+    return false
+end
+
+vim.api.nvim_create_autocmd({ "BufEnter", "BufReadPost" }, {
+    callback = function()
+        local bufnr = vim.api.nvim_get_current_buf()
+        if should_disable_treesitter(bufnr) then
+            vim.treesitter.stop(bufnr)
+        end
+    end,
+})
+
+
 require 'nvim-treesitter.configs'.setup {
     -- A list of parser names, or "all" (the five listed parsers should always be installed)
     ensure_installed = { "javascript", "typescript", "python", "html", "c", "lua", "vim", "vimdoc", "query" },
@@ -21,4 +50,11 @@ require 'nvim-treesitter.configs'.setup {
     autotag = {
         enable = true,
     },
+    disable = function(lang, buf)
+        local file_path = vim.api.nvim_buf_get_name(buf)
+        -- Disable for files larger than 2MB
+        if should_disable_for_size(file_path, 2048) then
+            return true
+        end
+    end,
 }
