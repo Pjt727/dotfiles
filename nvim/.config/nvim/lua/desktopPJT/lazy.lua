@@ -92,6 +92,7 @@ local plugins = {
         dependencies = {
             "nvim-lua/plenary.nvim",
             "nvim-treesitter/nvim-treesitter",
+            "ravitemer/codecompanion-history.nvim"
         },
     },
     {
@@ -119,8 +120,6 @@ local plugins = {
         "nvim-lualine/lualine.nvim",
         dependencies = { "nvim-tree/nvim-web-devicons" },
     },
-    -- My select plugin :D
-    "Pjt727/nvim-myselect",
 
     "ThePrimeagen/vim-be-good",
     {
@@ -204,17 +203,6 @@ local plugins = {
             end, NS)
         end,
     },
-    {
-        "benlubas/molten-nvim",
-        version = "^1.0.0", -- use version <2.0.0 to avoid breaking changes
-        dependencies = { "3rd/image.nvim" },
-        build = ":UpdateRemotePlugins",
-        init = function()
-            -- these are examples, not defaults. Please see the readme
-            vim.g.molten_image_provider = "image.nvim"
-            vim.g.molten_output_win_max_height = 20
-        end,
-    },
     { "nvim-telescope/telescope-symbols.nvim" },
     {
         "oysandvik94/curl.nvim",
@@ -226,6 +214,15 @@ local plugins = {
     },
     { "mistweaverco/kulala.nvim" },
     { "barreiroleo/ltex-extra.nvim" },
+    {
+        "folke/todo-comments.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        opts = {
+            -- your configuration comes here
+            -- or leave it empty to use the default settings
+            -- refer to the configuration section below
+        }
+    },
 }
 
 local opts = {}
