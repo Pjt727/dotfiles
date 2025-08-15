@@ -40,6 +40,11 @@ alias python="python3"
 alias bu="brightnessctl set 10%+"
 alias bd="brightnessctl set 10%-"
 alias cat="bat"
+
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+export PATH=$PATH:$(go env GOPATH)/bin #Confirm this line in your .profile and make sure to source the .profile if you add it!!!
+
 # custom keybinds
 bindkey "^[[2;5C" forward-word
 bindkey "^[[1;5D" backward-word
@@ -52,8 +57,8 @@ bindkey "^V" send-break
 # checks to see if there is a venv in this dir or a parent one
 
 python_venv() {
-  MYVENV=./venv
-  PARENT_VENV=../venv
+  MYVENV=./.venv
+  PARENT_VENV=../.venv
   # when you cd into a folder that contains $MYVENV
   [[ -d $MYVENV ]] && source $MYVENV/bin/activate
   # when you cd into a folder that doesn't
@@ -61,8 +66,8 @@ python_venv() {
   # [[ ! -d $MYVENV && ! -d $PARENT_VENV ]] && deactivate > /dev/null
 }
 # for the startup of a prompt
-MYVENV=./venv
-PARENT_VENV=../venv
+MYVENV=./.venv
+PARENT_VENV=../.venv
 [[ -d $MYVENV ]] && source $MYVENV/bin/activate
 autoload -U add-zsh-hook
 add-zsh-hook chpwd python_venv
@@ -91,6 +96,7 @@ eval "$(zoxide init zsh)"
 # bun completions
 [ -s "/home/pjt727/.bun/_bun" ] && source "/home/pjt727/.bun/_bun"
 
+# node variables
 NPM_PACKAGES="${HOME}/.npm-packages"
 
 export PATH="$PATH:$NPM_PACKAGES/bin"

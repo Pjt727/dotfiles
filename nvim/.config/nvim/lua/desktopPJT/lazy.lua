@@ -1,4 +1,4 @@
-vim.g.mapleader = " " -- ensure that mapleader is set for other pluginslazy
+vim.g.mapleader = " " -- ensure that mapleader is set for other pluginslazylazy
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
 --
 local plugins = {
@@ -95,20 +95,21 @@ local plugins = {
             "ravitemer/codecompanion-history.nvim"
         },
     },
-    {
-        "ravitemer/mcphub.nvim",
-        dependencies = {
-            "nvim-lua/plenary.nvim", -- Required for Job and HTTP requests
-        },
-        -- uncomment the following line to load hub lazily
-        --cmd = "MCPHub",  -- lazy load
-        build = "npm install -g mcp-hub@latest", -- Installs required mcp-hub npm module
-        -- uncomment this if you don't want mcp-hub to be available globally or can't use -g
-        -- build = "bundled_build.lua",  -- Use this and set use_bundled_binary = true in opts  (see Advanced configuration)
-        config = function()
-            require("mcphub").setup()
-        end,
-    },
+    -- Might be useful if I want to lean into ai workflows
+    -- {
+    --     "ravitemer/mcphub.nvim",
+    --     dependencies = {
+    --         "nvim-lua/plenary.nvim", -- Required for Job and HTTP requests
+    --     },
+    --     -- uncomment the following line to load hub lazily
+    --     --cmd = "MCPHub",  -- lazy load
+    --     build = "npm install -g mcp-hub@latest", -- Installs required mcp-hub npm module
+    --     -- uncomment this if you don't want mcp-hub to be available globally or can't use -g
+    --     -- build = "bundled_build.lua",  -- Use this and set use_bundled_binary = true in opts  (see Advanced configuration)
+    --     config = function()
+    --         require("mcphub").setup()
+    --     end,
+    -- },
     {
         "stevearc/oil.nvim",
         opts = {},
@@ -223,6 +224,16 @@ local plugins = {
             -- refer to the configuration section below
         }
     },
+    -- some mini plugins maybe I will add the whole mini ecosystem
+    { 'echasnovski/mini.move', version = '*' },
+    { 'echasnovski/mini.diff', version = '*' },
+
+    -- rust helpers
+    {
+        'mrcjkb/rustaceanvim',
+        version = '^6', -- Recommended
+        lazy = false,   -- This plugin is already lazy
+    }
 }
 
 local opts = {}

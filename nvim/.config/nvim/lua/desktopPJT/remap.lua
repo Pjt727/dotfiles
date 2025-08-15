@@ -2,10 +2,6 @@ vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>vv", vim.cmd.Ex)
 
 
--- moving selection
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
-
 
 -- Center half page jumps
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
@@ -87,4 +83,3 @@ vim.cmd('command! ResetSchema lua ResetSchema()')
 -- UNMAPPING KEYMAPS THAT MESS ME Up
 vim.api.nvim_del_keymap('n', '<C-W><C-D>')
 vim.api.nvim_del_keymap('n', '<C-W>d')
-

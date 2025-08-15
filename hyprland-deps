@@ -1,8 +1,8 @@
 #!/bin/bash
-yay -S hyprland kitty jq mako waybar-hyprland swww swaylock-effects \
+yay -S hyprland kitty jq mako waybar swww swaylock-effects \
 wofi wlogout xdg-desktop-portal-hyprland swappy grim slurp thunar \
 polkit-gnome python-requests pamixer brightnessctl bluez \
 bluez-utils blueman network-manager-applet gvfs thunar-archive-plugin \
 file-roller btop pacman-contrib starship ttf-jetbrains-mono-nerd \
 noto-fonts-emoji lxappearance emptty \
-ttf-firacode-nerd
+ttf-firacode-nerd noto-fonts playerctl

@@ -1,4 +1,4 @@
--- trying to get folding range weird html error thing fixed
+-- trying to get folding range weird html error thing fixedlsu
 -- I still dont know why it still happens but only sometimes
 local lsp = require("lsp-zero")
 require("mason").setup()
@@ -14,12 +14,34 @@ end
 
 local mason_config = require("mason-lspconfig")
 mason_config.setup({
-    ensure_installed = { "lua_ls", "rust_analyzer", "html", "htmx", "emmet_language_server", "templ" },
+    ensure_installed = { "lua_ls", "html", "htmx", "emmet_language_server", "templ" },
     handlers = {
-        lsp.default_setup,
+        -- lsp.default_setup,
         lua_ls = function()
             local lua_opts = lsp.nvim_lua_ls()
-            require("lspconfig").lua_ls.setup(lua_opts)
+            require("lspconfig").lua_ls.setup({
+                on_attach = lua_opts.on_attach,
+                settings = {
+                    Lua = {
+                        runtime = {
+                            version = 'LuaJIT',
+                        },
+                        workspace = {
+                            checkThirdParty = false,
+                            -- This line makes the Lua language server aware of Neovim's built-in API
+                            library = vim.api.nvim_get_runtime_file("", true),
+                        },
+                        completion = {
+                            callSnippet = "Replace",
+                        },
+                        diagnostics = {
+                            -- This line tells lua_ls that 'vim' is a global variable
+                            globals = { 'vim' },
+                        },
+                    },
+                },
+            }
+            )
         end,
         emmet_language_server = function()
             require("lspconfig").emmet_language_server.setup({
@@ -162,9 +184,6 @@ lsp.on_attach(function(client, bufnr)
     end, opts)
 end)
 
--- (Optional) Configure lua language server for neovim
--- require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
-lsp.setup()
 
 vim.diagnostic.config({
     virtual_text = true,
@@ -203,3 +222,29 @@ if not configs.templ then
         },
     }
 end
+
+
+-- rust config
+vim.g.rustaceanvim = {
+    -- Plugin configuration
+    tools = {
+    },
+    -- LSP configuration
+    server = {
+        on_attach = function(client, bufnr)
+            -- you can also put keymaps in here
+        end,
+        default_settings = {
+            -- rust-analyzer language server configuration
+            ['rust-analyzer'] = {
+            },
+        },
+    },
+    -- DAP configuration
+    dap = {
+    },
+}
+
+-- (Optional) Configure lua language server for neovim
+-- require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+lsp.setup()

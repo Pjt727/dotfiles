@@ -32,7 +32,7 @@ vim.o.secure = true
 
 -- http files
 vim.filetype.add({
-  extension = {
-    ['http'] = 'http',
-  },
+    extension = {
+        ['http'] = 'http',
+    },
 })
