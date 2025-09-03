@@ -7,7 +7,7 @@ export PATH="$BUNNSTALL/bin:$PATH"
 
 [ -f "/home/pjt727/.ghcup/env" ] && . "/home/pjt727/.ghcup/env" # ghcup-env
 
-export PATH="$PATH:/home/pjt727/.local/bin:/home/pjt727/.cargo/bin/:/home/pjt727/.custom-scripts/:/home/pjt727/go/bin"
+export PATH="$PATH:/home/pjt727/.local/bin:/home/pjt727/.cargo/bin/:/home/pjt727/.custom-scripts/:/home/pjt727/go/bin:/home/pjt727/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/bin"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUNNSTALL/bin:$PATH"
@@ -40,6 +40,7 @@ alias python="python3"
 alias bu="brightnessctl set 10%+"
 alias bd="brightnessctl set 10%-"
 alias cat="bat"
+alias note="$HOME/custom-scripts/note.zsh"
 
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin

@@ -1,0 +1,9 @@
+format = "$all$custom$character"
+
+[custom.jobs]
+command = "~/custom-scripts/tasks"
+# command = "jobs_cached"
+when = "true"
+shell = ["zsh"]
+format = "[$output]($style)"
+style = "bold green"

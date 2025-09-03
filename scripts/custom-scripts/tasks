@@ -1,0 +1,45 @@
+#!/bin/bash
+set -euo pipefail
+
+CACHE_FILE="/tmp/tasks-cache-$(date +%Y-%m-%d)"
+
+if [[ -f "$CACHE_FILE" ]]; then
+  cat "$CACHE_FILE"
+  exit 0
+fi
+
+
+if [[ ! -f "$HOME/tasks.csv" ]]; then
+  echo "MBW"   # no tasks yet → nothing to show in prompt
+  exit 0
+fi
+
+# --- expensive check logic here ---
+OUT=""
+
+needs_job() {
+  job_type="$1"
+  max_days="$2"
+  last_date=$(awk -F, -v job="$job_type" '
+    NR > 1 && $1 == job {print $2; exit}' "$HOME/tasks.csv")
+
+  if [[ -z "$last_date" ]]; then
+    return 0
+  fi
+
+  last_secs=$(date -d "$last_date" +%s)
+  today_secs=$(date +%s)
+  diff_days=$(( (today_secs - last_secs) / 86400 ))
+
+  if (( diff_days > max_days )); then
+    return 0
+  fi
+  return 1
+}
+
+if needs_job "MONTHLY" 30; then OUT="${OUT}M"; fi
+if needs_job "BIWEEKLY" 14; then OUT="${OUT}B"; fi
+if needs_job "WEEKLY" 7; then OUT="${OUT}W"; fi
+
+echo -n "$OUT" | tee "$CACHE_FILE"
+

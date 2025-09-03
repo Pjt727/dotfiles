@@ -9,6 +9,9 @@ require("conform").setup({
 		golang = { "gofmt" },
 		go = { "gofmt", "golines" },
 	},
+	-- linters_by_ft = {
+	-- 	go = { "golangci-lint" },
+	-- },
 })
 
 require("conform").setup({
