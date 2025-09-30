@@ -1,92 +1,35 @@
--- trying to get folding range weird html error thing fixedlsu
--- I still dont know why it still happens but only sometimes
-local lsp = require("lsp-zero")
-require("mason").setup()
+-- =============================================================================
+-- UI Customizations
+-- =============================================================================
 
 local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
-
 vim.lsp.util.open_floating_preview = function(contents, syntax, opts, ...)
     opts = opts or {}
     opts.border = opts.border or "rounded"
-    opts.title = ""
+    opts.title = "" -- Keep title empty as in original config
     return orig_util_open_floating_preview(contents, syntax, opts, ...)
 end
 
-local mason_config = require("mason-lspconfig")
-mason_config.setup({
-    ensure_installed = { "lua_ls", "html", "htmx", "emmet_language_server", "templ", "tinymist" },
-    handlers = {
-        lsp.default_setup,
-        lua_ls = function()
-            require("lspconfig").lua_ls.setup({
-                settings = {
-                    Lua = {
-                        diagnostics = {
-                            disable = { "missing-parameters", "missing-fields" },
-                        },
-                        workspace = {
-                            library = vim.api.nvim_get_runtime_file("", true),
-                        },
-                    },
-                },
-            })
-        end,
-        emmet_language_server = function()
-            require("lspconfig").emmet_language_server.setup({
-                filetypes = { "html", "htmldjango", "templ" },
-            })
-        end,
-        html = function()
-            require("lspconfig").html.setup({
-                filetypes = { "html", "htmldjango" },
-            })
-        end,
-        htmx = function()
-            require("lspconfig").html.setup({
-                filetypes = { "html", "htmldjango", "templ" },
-            })
-        end,
-        pylsp = function()
-            require("lspconfig").pylsp.setup({
-                settings = {
-                    pylsp = {
+-- Configure diagnostic symbols
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+for type, icon in pairs(signs) do
+    local hl = "DiagnosticSign" .. type
+    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
 
-                        plugins = {
-                            pycodestyle = { enabled = false },
-                            pylint = { enabled = false }, -- or set to true if you want to keep pylint
-                        },
-                    },
-                },
-            })
-        end,
-        tinymist = function()
-            require("lspconfig").tinymist.setup({})
-        end,
-    },
+vim.diagnostic.config({
+    virtual_text = true,
 })
 
-local linter = require("lint")
 
-linter.linters_by_ft = {
-    htmldjango = { "djlint" },
-    -- markdown = { 'vale', },
-}
-
-vim.api.nvim_create_autocmd({ "BufWritePost" }, {
-    callback = function()
-        -- try_lint without arguments runs the linters defined in `linters_by_ft`
-        -- for the current filetype
-        require("lint").try_lint()
-    end,
-})
-
--- linter.get_running()
-
-lsp.preset("recommended")
+-- =============================================================================
+-- Completion Setup (nvim-cmp)
+-- =============================================================================
 
 local cmp = require("cmp")
-local cmp_action = require("lsp-zero").cmp_action()
+local luasnip = require("luasnip") -- Required for snippet functionality
 
+-- Custom sorting function to prioritize non-dunder methods in Python
 local function is_dunder(entry1, entry2)
     local _, entry1_under = entry1.completion_item.label:find("^_+")
     local _, entry2_under = entry2.completion_item.label:find("^_+")
@@ -100,12 +43,17 @@ local function is_dunder(entry1, entry2)
 end
 
 cmp.setup({
+    snippet = {
+        expand = function(args)
+            luasnip.lsp_expand(args.body)
+        end,
+    },
     sorting = {
         comparators = {
             cmp.config.compare.exact,
             cmp.config.compare.score,
             cmp.config.compare.recently_used,
-            is_dunder,
+            is_dunder, -- Your original custom sorter
             cmp.config.compare.kind,
             cmp.config.compare.sort_text,
             cmp.config.compare.length,
@@ -118,21 +66,35 @@ cmp.setup({
     },
     mapping = cmp.mapping.preset.insert({
         ["<C-Space>"] = cmp.mapping.complete(),
-        ["<C-f>"] = cmp_action.luasnip_jump_forward(),
-        ["<C-b>"] = cmp_action.luasnip_jump_backward(),
+        ["<CR>"] = cmp.mapping.confirm({ select = true }),
+        -- Refactored to use luasnip directly, which may fix your snippet issue.
+        ["<C-f>"] = cmp.mapping(function(fallback)
+            if luasnip.expand_or_jumpable() then
+                luasnip.expand_or_jump()
+            else
+                fallback()
+            end
+        end, { "i", "s" }),
+        ["<C-b>"] = cmp.mapping(function(fallback)
+            if luasnip.jumpable(-1) then
+                luasnip.jump(-1)
+            else
+                fallback()
+            end
+        end, { "i", "s" }),
         ["<C-u>"] = cmp.mapping.scroll_docs(-4),
         ["<C-d>"] = cmp.mapping.scroll_docs(4),
     }),
     sources = cmp.config.sources({
         { name = "nvim_lsp" },
-        { name = "luasnip" }, -- WHY CANT I GET LUASNIP TO WORK???
+        { name = "luasnip" },
         { name = "buffer" },
         { name = "path" },
         { name = "codecompanion" },
     }),
 })
--- setup vim-dadbod
 
+-- Setup for SQL with vim-dadbod
 cmp.setup.filetype({ "sql" }, {
     sources = {
         { name = "vim-dadbod-completion" },
@@ -140,101 +102,175 @@ cmp.setup.filetype({ "sql" }, {
     },
 })
 
-lsp.on_attach(function(client, bufnr)
-    local opts = { buffer = bufnr, remap = false }
-    lsp.default_keymaps({ buffer = bufnr })
-    -- love these two
-    vim.keymap.set("n", "gd", function()
-        vim.lsp.buf.definition()
-    end, opts)
-    vim.keymap.set("n", "<leader>vrr", function()
-        vim.lsp.buf.references()
-    end, opts)
 
-    vim.keymap.set("n", "K", function()
-        vim.lsp.buf.hover()
-    end, opts)
-    vim.keymap.set("n", "<leader>vws", function()
-        vim.lsp.buf.workspace_symbol()
-    end, opts)
-    -- REMEMBER THIS
-    vim.keymap.set("n", "<leader>vd", function()
-        vim.diagnostic.open_float()
-    end, opts)
-    vim.keymap.set("n", "<leader>ca", function()
-        vim.lsp.buf.code_action()
-    end, opts)
-    vim.keymap.set("n", "<leader>rn", function()
-        vim.lsp.buf.rename()
-    end, opts)
-    vim.keymap.set("n", "<C-i>", function()
-        vim.lsp.buf.signature_help()
-    end, opts)
-    vim.keymap.set("i", "<C-i>", function()
-        vim.lsp.buf.signature_help()
-    end, opts)
-end)
+-- =============================================================================
+-- LSP Configuration (lspconfig)
+-- =============================================================================
 
-vim.diagnostic.config({
-    virtual_text = true,
-})
+-- Global on_attach function to apply keymaps and settings to each LSP server
+local on_attach = function(client, bufnr)
+    -- This callback runs when an LSP server attaches to a buffer.
+    vim.notify("LSP attached: " .. client.name, vim.log.levels.INFO, { title = "LSP" })
 
--- templ
--- Register the language
-vim.filetype.add({
-    extension = {
-        templ = "templ",
+    local opts = { buffer = bufnr, noremap = true, silent = true }
+    local keymap = vim.keymap.set
+
+    -- Your original keymaps
+    keymap("n", "gd", vim.lsp.buf.definition, opts)
+    keymap("n", "<leader>vrr", vim.lsp.buf.references, opts)
+    keymap("n", "K", vim.lsp.buf.hover, opts)
+    keymap("n", "<leader>vws", vim.lsp.buf.workspace_symbol, opts)
+    keymap("n", "<leader>vd", vim.diagnostic.open_float, opts)
+    keymap("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+    keymap("n", "<leader>rn", vim.lsp.buf.rename, opts)
+    keymap({ "n", "i" }, "<C-i>", vim.lsp.buf.signature_help, opts)
+
+    -- Adding some common keymaps that lsp-zero might have provided
+    keymap("n", "gD", vim.lsp.buf.declaration, opts)
+    keymap("n", "gi", vim.lsp.buf.implementation, opts)
+    keymap("n", "[d", vim.diagnostic.goto_prev, opts)
+    keymap("n", "]d", vim.diagnostic.goto_next, opts)
+end
+
+
+-- Get capabilities from nvim-cmp to pass to each LSP server
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+
+-- lua ls
+
+vim.lsp.config("lua_ls", {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+        Lua = {
+            diagnostics = {
+                disable = { "missing-parameters", "missing-fields" },
+            },
+            workspace = {
+                library = vim.api.nvim_get_runtime_file("", true),
+            },
+        },
     },
 })
 
--- Make sure we have a tree-sitter grammar for the language
-local treesitter_parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-treesitter_parser_config.templ = treesitter_parser_config.templ
-    or {
-        install_info = {
-            url = "https://github.com/vrischmann/tree-sitter-templ.git",
-            files = { "src/parser.c", "src/scanner.c" },
-            branch = "master",
+vim.lsp.enable("lua_ls")
+
+-- html
+-- lspconfig.html.setup({
+--     on_attach = on_attach,
+--     capabilities = capabilities,
+--     filetypes = { "html", "htmldjango", "templ" },
+-- })
+
+-- emmet
+
+vim.lsp.config("emmet_language_server", {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    filetypes = { "html", "htmldjango", "templ" },
+})
+
+vim.lsp.enable("emmet_language_server")
+
+-- python
+
+vim.lsp.config("pylsp", {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+        pylsp = {
+            plugins = {
+                pycodestyle = { enabled = false },
+                pylint = { enabled = false },
+            },
         },
-    }
+    },
+})
 
-vim.treesitter.language.register("templ", "templ")
+vim.lsp.enable("pylsp")
 
--- Register the LSP as a config
-local configs = require("lspconfig.configs")
-if not configs.templ then
-    configs.templ = {
-        default_config = {
-            cmd = { "templ", "lsp" },
-            filetypes = { "templ" },
-            root_dir = require("lspconfig.util").root_pattern("go.mod", ".git"),
-            settings = {},
-        },
-    }
-end
+-- typst
 
--- rust config
+vim.lsp.config("tinymist", {
+    on_attach = on_attach,
+    capabilities = capabilities,
+})
+
+vim.lsp.enable("tinymist")
+
+-- templ
+
+vim.lsp.config("templ", {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    cmd = { "templ", "lsp" },
+    filetypes = { "templ" },
+    root_dir = require("lspconfig.util").root_pattern("go.mod", ".git"),
+    settings = {},
+}
+)
+
+vim.lsp.enable("templ")
+
+-- typescript
+
+vim.lsp.config("ts_ls", {
+    on_attach = on_attach,
+    capabilities = capabilities,
+})
+
+vim.lsp.enable("ts_ls")
+
+-- harper
+
+vim.lsp.config("harper_ls", {
+    filetypes = { "markdown", "typst" },
+    on_attach = on_attach,
+    capabilities = capabilities,
+})
+
+vim.lsp.enable("harper_ls")
+
+
+-- =============================================================================
+-- Language Specific Setups
+-- =============================================================================
+
+-- templ (Filetype, Treesitter, and LSP Registration)
+
+vim.filetype.add({ extension = { templ = "templ" } })
+
+-- Rust (rustaceanvim)
+-- This plugin handles its own LSP setup. Your existing configuration is fine.
+-- I've added the on_attach and capabilities to ensure it has the same keymaps.
 vim.g.rustaceanvim = {
-    -- Plugin configuration
     tools = {},
-    -- LSP configuration
     server = {
-        on_attach = function(client, bufnr)
-            -- you can also put keymaps in here
-        end,
+        on_attach = on_attach,
+        capabilities = capabilities,
         default_settings = {
-            -- rust-analyzer language server configuration
             ["rust-analyzer"] = {},
         },
     },
-    -- DAP configuration
     dap = {},
 }
 
-require("lspconfig").harper_ls.setup({
-    filetypes = { "markdown", "typst" },
+
+-- =============================================================================
+-- Linting (lint.nvim)
+-- =============================================================================
+-- This section is independent of the LSP setup and is kept as is.
+local linter = require("lint")
+
+linter.linters_by_ft = {
+    htmldjango = { "djlint" },
+}
+
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+    callback = function()
+        require("lint").try_lint()
+    end,
 })
 
--- (Optional) Configure lua language server for neovim
--- require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
-lsp.setup()
+
