@@ -29,7 +29,8 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufReadPost" }, {
 
 require 'nvim-treesitter.configs'.setup {
     -- A list of parser names, or "all" (the five listed parsers should always be installed)
-    ensure_installed = { "javascript", "typescript", "python", "html", "c", "lua", "vim", "vimdoc", "query", "gitignore", "git_config", "bash", "hyprlang", "templ", "json" },
+    ensure_installed = { "javascript", "typescript", "python", "html", "c", "lua", "vim", "vimdoc", "query",
+        "gitignore", "git_config", "bash", "hyprlang", "templ", "json", "dockerfile", "yaml", "go", "sql", "http" },
 
     -- Install parsers synchronously (only applied to `ensure_installed`)
     sync_install = false,

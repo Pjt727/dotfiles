@@ -173,13 +173,22 @@ vim.lsp.config("emmet_language_server", {
 
 vim.lsp.enable("emmet_language_server")
 
+-- golang
+
+vim.lsp.config("gopls", {
+    on_attach = on_attach,
+    capabilities = capabilities,
+})
+
+vim.lsp.enable("gopls")
+
 -- python
 
-vim.lsp.config("pylsp", {
+vim.lsp.config("pyright", {
     on_attach = on_attach,
     capabilities = capabilities,
     settings = {
-        pylsp = {
+        pyright = {
             plugins = {
                 pycodestyle = { enabled = false },
                 pylint = { enabled = false },
@@ -188,7 +197,7 @@ vim.lsp.config("pylsp", {
     },
 })
 
-vim.lsp.enable("pylsp")
+vim.lsp.enable("pyright")
 
 -- typst
 
@@ -273,4 +282,27 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
     end,
 })
 
+-- =============================================================================
+-- Notifications
+-- =============================================================================
+-- Disable some annoying messages, which are useful but I don't like
 
+local original_notify = vim.notify
+
+vim.notify = function(msg, level, opts)
+    -- if msg == 'No information available' then
+    --     return
+    -- end
+
+    -- To suppress messages containing "[lspconfig]" (e.g., autostart messages):
+
+    if msg:match("LSP attached") then
+        return
+    end
+
+    -- You can add more conditions here based on the `msg` or `opts`
+    -- to filter other LSP-related notifications from nvim-notify.
+
+    -- If the message is not suppressed, call the original notify function.
+    original_notify(msg, level, opts)
+end
