@@ -21,7 +21,7 @@ brew "zoxide"
 brew "yazi"
 brew "fzf"
 brew "bat"
-brew "exa"
+brew "eza"
 
 # python + typescript deps
 brew "node"

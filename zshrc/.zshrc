@@ -17,7 +17,7 @@ export NNN_PLUG="f:autojump;p:preview-tui"
 export NNN_FIFO=/tmp/nnn.fifo
 
 # secrets
-source /home/pjt727/secrets.zsh
+source "$HOME/secrets.zsh"
 
 define_word() {
     curl "https://api.dictionaryapi.dev/api/v2/entries/en/$1" | jq '.[0].meanings[].definitions[].definition'
@@ -44,7 +44,7 @@ alias note="$HOME/custom-scripts/note.zsh"
 
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
-export PATH=$PATH:$(go env GOPATH)/bin #Confirm this line in your .profile and make sure to source the .profile if you add it!!!
+# export PATH=$PATH:$(go env GOPATH)/bin #Confirm this line in your .profile and make sure to source the .profile if you add it!!!
 
 # custom keybinds
 bindkey "^[[2;5C" forward-word
@@ -89,7 +89,7 @@ source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 # can be a little distracting (maybe make it togglable)
 # source zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
-eval $(thefuck --alias tf)
+# eval $(thefuck --alias tf)
 
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
