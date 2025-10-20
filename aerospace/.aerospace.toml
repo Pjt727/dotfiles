@@ -1,4 +1,5 @@
 # Reference: https://github.com/i3/i3/blob/next/etc/config
+start-at-login = true
 
 # i3 doesn't have "normalizations" feature, that’s why we disable them here.
 enable-normalization-flatten-containers = false
