@@ -36,7 +36,8 @@ alias gf="git add . & git commit . -m FastCommit & git push"
 alias cd="z"
 alias cdi="zi"
 alias zf="zoxide query"
-alias python="python3"
+# alias python="python3"
+alias python="uv run python"
 alias bu="brightnessctl set 10%+"
 alias bd="brightnessctl set 10%-"
 alias cat="bat"
@@ -83,6 +84,7 @@ HISTFILE=$HOME/.zhistory
 SAVEHIST=1000
 HISTSIZE=999
 
+
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # not too sure how I feel about this but is def sometimes nice
@@ -106,6 +108,8 @@ export PATH="$PATH:$NPM_PACKAGES/bin"
 # Otherwise, fall back to `manpath` so we can inherit from `/etc/manpath`.
 export MANPATH="${MANPATH-$(manpath)}:$NPM_PACKAGES/share/man"
 
+source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"

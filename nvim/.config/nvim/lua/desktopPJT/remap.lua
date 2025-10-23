@@ -53,21 +53,8 @@ vim.cmd([[command! -nargs=* -complete=file W w <args>]])
 -- latexmk -pdf -pvc .\1lab.tex -f
 
 
--- WINDOWS TERMINAL SPECIFIC running a latex document
--- vim.api.nvim_set_keymap('n', '<leader>rl', [[:!wt -d "%:p" --title="Live Latex" powershell.exe -Command "latexmk -pdf -synctex=1 -pvc % "<cr>]], { noremap = true, silent = true })
--- if you try to do forward and backward search make sure
--- synctex=1
-vim.api.nvim_set_keymap('n', '<leader>rl',
-    [[:!wt -d "%:p:h:h" --title="Live Latex" powershell.exe -Command "latexmk -pdf -output-directory='%:h' -pvc '%:p' "<cr>]],
-    { noremap = true, silent = true })
-
-
--- PSQL command just for my database class to reset the CAP database
-function ResetSchema()
-    local cmd = 'psql -d BANNER -U postgres -f BANNER-schema.sql'
-    vim.cmd('!' .. cmd)
-    print("Reset!")
-end
+-- db
+vim.cmd("command! WhichDb echo g:db")
 
 -- make executable
 vim.api.nvim_set_keymap('n', '<leader>w', ':w | ! chmod +x %<CR><CR>', { noremap = true })
@@ -83,3 +70,4 @@ vim.cmd('command! ResetSchema lua ResetSchema()')
 -- UNMAPPING KEYMAPS THAT MESS ME Up
 vim.api.nvim_del_keymap('n', '<C-W><C-D>')
 vim.api.nvim_del_keymap('n', '<C-W>d')
+

@@ -164,7 +164,7 @@ vim.lsp.enable("lua_ls")
 vim.lsp.config("emmet_language_server", {
 	on_attach = on_attach,
 	capabilities = capabilities,
-	filetypes = { "html", "htmldjango", "templ" },
+	filetypes = { "html", "htmldjango", "templ", "typescriptreact"},
 })
 
 vim.lsp.enable("emmet_language_server")
