@@ -71,3 +71,6 @@ vim.cmd('command! ResetSchema lua ResetSchema()')
 vim.api.nvim_del_keymap('n', '<C-W><C-D>')
 vim.api.nvim_del_keymap('n', '<C-W>d')
 
+-- Spell check with Claude
+vim.keymap.set('n', '<leader>sp', function() require('desktopPJT.spell').spell_check('n') end, { desc = 'Spell check and replace word' })
+vim.keymap.set('v', '<leader>sp', function() require('desktopPJT.spell').spell_check('v') end, { desc = 'Spell check and replace selection' })

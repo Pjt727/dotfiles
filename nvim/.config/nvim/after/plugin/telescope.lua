@@ -19,7 +19,7 @@ local db_envs = {
 }
 local pickerOptions = {}
 
--- Loop through and populate vim.g.dbs
+-- Loop through and populate vim.g.dbPickOptions
 for key, label in pairs(db_envs) do
     local value = os.getenv(key .. "_DB")
     if value then
@@ -27,18 +27,18 @@ for key, label in pairs(db_envs) do
     end
 end
 
-vim.g.dbs = pickerOptions
+vim.g.dbPickOptions = pickerOptions
 
--- how to add databases to the list (you can not mutate the vim.g.dbs table directly)
--- local temp = vim.g.dbs
+-- how to add databases to the list (you can not mutate the vim.g.dbPickOptions table directly)
+-- local temp = vim.g.dbPickOptions
 -- table.insert(temp, { name = "visual name", conn = "db connection" })
--- vim.g.dbs = temp
+-- vim.g.dbPickOptions = temp
 
 local function pick_database()
     pickers.new({}, {
         prompt_title = "Select Database",
         finder = finders.new_table({
-            results = vim.g.dbs,
+            results = vim.g.dbPickOptions,
             entry_maker = function(entry)
                 return {
                     value = entry.conn,

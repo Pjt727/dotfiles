@@ -43,6 +43,77 @@ alias bd="brightnessctl set 10%-"
 alias cat="bat"
 alias note="$HOME/custom-scripts/note.zsh"
 
+spell() {
+  local query="$1"
+  if [ -z "$query" ]; then
+    echo "Usage: spell <word>"
+    return 1
+  fi
+
+  local result
+  result=$(claude --model claude-haiku-4-5-20251001 -p "Provide the likely spelling for the misspelling of the word $query. IMPORTANT: only respond with the correct spelling of the word. If there are multiple possibilities, provide each on a new line." 2>/dev/null)
+
+  local line_count
+  line_count=$(echo "$result" | wc -l | tr -d ' ')
+
+  if [ "$line_count" -gt 1 ]; then
+    local choice
+    choice=$(echo "$result" | fzf)
+    printf %s "$choice" | pbcopy
+    echo "$choice"
+  elif [ "$result" = "$query" ]; then
+    echo "'$query' is spelled correctly"
+  else
+    printf %s "$result" | pbcopy
+    echo "$result"
+  fi
+}
+
+git-clean() {
+ # Prune remote-tracking branches
+  git fetch -p
+
+  # Collect local branches whose upstream is gone
+  local gone_branches
+  gone_branches=("${(@f)$(git branch -vv | awk '/: gone]/{print $1}')}")
+
+  if [[ ${#gone_branches[@]} -eq 0 ]]; then
+    echo "No local branches with 'gone' upstream."
+    return 0
+  fi
+
+  echo "Deleting the following branches:"
+  printf "%s\n" "${gone_branches[@]}"
+
+  # Delete them (safe delete; change to -D to force)
+  for b in "${gone_branches[@]}"; do
+    git branch -d "$b"
+  done
+}
+
+
+# look this .ssh/config use fzf to connect to a host
+ssh-fzf() {
+  SSH_HOST=$(rg -N --no-heading --no-line-number -i -o -U '(?s)^[[:space:]]*#\s*(.+?)\n^[[:space:]]*Host\s+([^\s]+)' -r '$1: $2' ~/.ssh/config | \
+    fzf --prompt="Select SSH Host: " | \
+    awk -F': ' '{print $NF}')
+
+  if [ -n "$SSH_HOST" ]; then
+    echo "Connecting to $SSH_HOST..."
+    ssh "$SSH_HOST"
+  else
+    echo "No host selected."
+  fi
+}
+
+hosts() {
+  SSH_HOST=$(rg -N --no-heading --no-line-number -i -o -U '(?s)^[[:space:]]*#\s*(.+?)\n^[[:space:]]*Host\s+([^\s]+)' -r '$1: $2' ~/.ssh/config | \
+    fzf --prompt="Select SSH Host: " | \
+    awk -F': ' '{print $NF}')
+  echo SSH_HOST
+}
+
+
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 # export PATH=$PATH:$(go env GOPATH)/bin #Confirm this line in your .profile and make sure to source the .profile if you add it!!!
@@ -113,3 +184,6 @@ source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
