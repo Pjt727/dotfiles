@@ -76,8 +76,12 @@ require("lualine").setup({
         },
         -- lualine_x = {'encoding', 'fileformat', 'filetype'},
         lualine_x = { "filetype" },
-        lualine_y = {},
-        lualine_z = {},
+        lualine_y = {
+            { require("recorder").displaySlots },
+        },
+        lualine_z = {
+            { require("recorder").recordingStatus },
+        },
     },
     inactive_sections = {
         lualine_a = {},
