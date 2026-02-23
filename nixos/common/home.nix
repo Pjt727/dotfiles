@@ -200,27 +200,27 @@
         "Alt+Shift+0".action.move-column-to-workspace = 10;
 
         # Screenshot
-        "Print".action.spawn = [ "sh" "-c" "grim -g \"$(slurp)\" - | swappy -f -" ];
+        "Print".action.screenshot = {};
 
         # Media keys
-        "XF86AudioPlay".action.spawn = [ "playerctl" "play-pause" ];
-        "XF86AudioPause".action.spawn = [ "playerctl" "play-pause" ];
-        "XF86AudioNext".action.spawn = [ "playerctl" "next" ];
-        "XF86AudioPrev".action.spawn = [ "playerctl" "previous" ];
-        "XF86AudioRaiseVolume".action.spawn = [ "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%+" ];
-        "XF86AudioLowerVolume".action.spawn = [ "wpctl" "set-volume" "@DEFAULT_AUDIO_SINK@" "5%-" ];
-        "XF86AudioMute".action.spawn = [ "wpctl" "set-mute" "@DEFAULT_AUDIO_SINK@" "toggle" ];
+        "XF86AudioPlay".action.spawn = [ "noctalia" "ipc" "call" "media" "playPause" ];
+        "XF86AudioPause".action.spawn = [ "noctalia" "ipc" "call" "media" "playPause" ];
+        "XF86AudioNext".action.spawn = [ "noctalia" "ipc" "call" "media" "next" ];
+        "XF86AudioPrev".action.spawn = [ "noctalia" "ipc" "call" "media" "previous" ];
+        "XF86AudioRaiseVolume".action.spawn = [ "noctalia" "ipc" "call" "volume" "increase" ];
+        "XF86AudioLowerVolume".action.spawn = [ "noctalia" "ipc" "call" "volume" "decrease" ];
+        "XF86AudioMute".action.spawn = [ "noctalia" "ipc" "call" "volume" "muteOutput" ];
 
         # Brightness keys
-        "XF86MonBrightnessUp".action.spawn = [ "brightnessctl" "set" "5%+" ];
-        "XF86MonBrightnessDown".action.spawn = [ "brightnessctl" "set" "5%-" ];
+        "XF86MonBrightnessUp".action.spawn = [ "noctalia" "ipc" "call" "brightness" "increase" ];
+        "XF86MonBrightnessDown".action.spawn = [ "noctalia" "ipc" "call" "brightness" "decrease" ];
 
         # Resize columns
         "Alt+Minus".action.set-column-width = "-10%";
         "Alt+Equal".action.set-column-width = "+10%";
 
         # Power menu
-        "Alt+Shift+E".action.spawn = [ "wlogout" ];
+        "Alt+Shift+E".action.spawn = [ "noctalia" "ipc" "call" "sessionMenu" "toggle" ];
       };
 
       # Cursor theme

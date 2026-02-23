@@ -7,12 +7,20 @@
 {
   # Enable flakes
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  # Auto garbage-collect old generations
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
   systemd.settings.Manager = {
       DefaultLimitNOFILE = 1048576;
   };
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 10;
   boot.loader.efi.canTouchEfiVariables = true;
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -142,14 +150,8 @@
 
    # Niri/Wayland utilities
    swww
-   playerctl
-   brightnessctl
-   grim
-   slurp
-   swappy
    wl-clipboard
    cliphist
-   wlogout
    networkmanagerapplet
    xwayland-satellite
    polkit_gnome
