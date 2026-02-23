@@ -54,10 +54,10 @@
   # You can disable this if you're only using the Wayland session.
   services.xserver.enable = true;
 
-  # Enable the KDE Plasma Desktop Environment (fallback session).
+  # Display manager (SDDM) with niri as default session
   services.displayManager.sddm.enable = true;
   services.displayManager.sddm.wayland.enable = true;
-  services.desktopManager.plasma6.enable = true;
+  services.displayManager.defaultSession = "niri";
 
   # Enable Niri compositor
   programs.niri = {
@@ -156,6 +156,7 @@
    xwayland-satellite
    polkit_gnome
    quickshell
+   inputs.noctalia.packages.${pkgs.stdenv.hostPlatform.system}.default
   #  wget
   ];
 

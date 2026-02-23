@@ -110,11 +110,32 @@
         "type": "github"
       }
     },
+    "noctalia": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1771814586,
+        "narHash": "sha256-25pJCgHvSgpZAgidRPm9M15T6ymcj04pur+uE14hdc0=",
+        "owner": "noctalia-dev",
+        "repo": "noctalia-shell",
+        "rev": "5043d0739ac5ced360f49ae552fd015ddedbb443",
+        "type": "github"
+      },
+      "original": {
+        "owner": "noctalia-dev",
+        "repo": "noctalia-shell",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "home-manager": "home-manager",
         "niri": "niri",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "noctalia": "noctalia"
       }
     },
     "xwayland-satellite-stable": {

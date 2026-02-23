@@ -44,7 +44,7 @@
   qt = {
     enable = true;
     platformTheme.name = "gtk";
-    style.name = "breeze";
+    style.name = "adwaita";
   };
 
   # Niri compositor configuration
@@ -149,7 +149,7 @@
         # Application launchers
         "Alt+T".action.spawn = [ "kitty" ];
         "Alt+G".action.spawn = [ "firefox" ];
-        "Alt+Space".action.spawn = [ "noctalia" "ipc" "call" "launcher" "toggle" ];
+        "Alt+Space".action.spawn = [ "noctalia-shell" "ipc" "call" "launcher" "toggle" ];
 
         # Window management
         "Alt+F".action.maximize-column = {};
@@ -203,24 +203,24 @@
         "Print".action.screenshot = {};
 
         # Media keys
-        "XF86AudioPlay".action.spawn = [ "noctalia" "ipc" "call" "media" "playPause" ];
-        "XF86AudioPause".action.spawn = [ "noctalia" "ipc" "call" "media" "playPause" ];
-        "XF86AudioNext".action.spawn = [ "noctalia" "ipc" "call" "media" "next" ];
-        "XF86AudioPrev".action.spawn = [ "noctalia" "ipc" "call" "media" "previous" ];
-        "XF86AudioRaiseVolume".action.spawn = [ "noctalia" "ipc" "call" "volume" "increase" ];
-        "XF86AudioLowerVolume".action.spawn = [ "noctalia" "ipc" "call" "volume" "decrease" ];
-        "XF86AudioMute".action.spawn = [ "noctalia" "ipc" "call" "volume" "muteOutput" ];
+        "XF86AudioPlay".action.spawn = [ "noctalia-shell" "ipc" "call" "media" "playPause" ];
+        "XF86AudioPause".action.spawn = [ "noctalia-shell" "ipc" "call" "media" "playPause" ];
+        "XF86AudioNext".action.spawn = [ "noctalia-shell" "ipc" "call" "media" "next" ];
+        "XF86AudioPrev".action.spawn = [ "noctalia-shell" "ipc" "call" "media" "previous" ];
+        "XF86AudioRaiseVolume".action.spawn = [ "noctalia-shell" "ipc" "call" "volume" "increase" ];
+        "XF86AudioLowerVolume".action.spawn = [ "noctalia-shell" "ipc" "call" "volume" "decrease" ];
+        "XF86AudioMute".action.spawn = [ "noctalia-shell" "ipc" "call" "volume" "muteOutput" ];
 
         # Brightness keys
-        "XF86MonBrightnessUp".action.spawn = [ "noctalia" "ipc" "call" "brightness" "increase" ];
-        "XF86MonBrightnessDown".action.spawn = [ "noctalia" "ipc" "call" "brightness" "decrease" ];
+        "XF86MonBrightnessUp".action.spawn = [ "noctalia-shell" "ipc" "call" "brightness" "increase" ];
+        "XF86MonBrightnessDown".action.spawn = [ "noctalia-shell" "ipc" "call" "brightness" "decrease" ];
 
         # Resize columns
         "Alt+Minus".action.set-column-width = "-10%";
         "Alt+Equal".action.set-column-width = "+10%";
 
         # Power menu
-        "Alt+Shift+E".action.spawn = [ "noctalia" "ipc" "call" "sessionMenu" "toggle" ];
+        "Alt+Shift+E".action.spawn = [ "noctalia-shell" "ipc" "call" "sessionMenu" "toggle" ];
       };
 
       # Cursor theme
