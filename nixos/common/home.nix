@@ -17,6 +17,9 @@
     QT_QPA_PLATFORM = "wayland";
     SDL_VIDEODRIVER = "wayland";
     XDG_SESSION_TYPE = "wayland";
+    # Dark mode hints for apps that check env vars
+    GTK_THEME = "rose-pine";
+    QT_STYLE_OVERRIDE = "adwaita-dark";
   };
 
   # Rose Pine GTK theme
@@ -37,6 +40,7 @@
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
+      gtk-theme = "rose-pine";
     };
   };
 
@@ -44,12 +48,15 @@
   qt = {
     enable = true;
     platformTheme.name = "gtk";
-    style.name = "adwaita";
+    style.name = "adwaita-dark";
   };
 
   # Niri compositor configuration
   programs.niri = {
     settings = {
+      # Tell apps not to draw their own title bars
+      prefer-no-csd = true;
+
       # Startup applications
       spawn-at-startup = [
         { command = [ "swww-daemon" ]; }
@@ -154,20 +161,21 @@
         # Window management
         "Alt+F".action.maximize-column = {};
         "Alt+F4".action.close-window = {};
+        "Ctrl+Shift+W".action.close-window = {};
         "Alt+V".action.toggle-window-floating = {};
         "Alt+P".action.switch-preset-column-width = {};
 
         # Vim-style focus navigation
         "Alt+H".action.focus-column-left = {};
         "Alt+L".action.focus-column-right = {};
-        "Alt+J".action.focus-window-down = {};
-        "Alt+K".action.focus-window-up = {};
+        "Alt+J".action.focus-workspace-down = {};
+        "Alt+K".action.focus-workspace-up = {};
 
         # Move windows
         "Alt+Shift+H".action.move-column-left = {};
         "Alt+Shift+L".action.move-column-right = {};
-        "Alt+Shift+J".action.move-window-down = {};
-        "Alt+Shift+K".action.move-window-up = {};
+        "Alt+Shift+J".action.move-column-to-workspace-down = {};
+        "Alt+Shift+K".action.move-column-to-workspace-up = {};
 
         # Workspace navigation (1-0 for workspaces 1-10)
         "Alt+1".action.focus-workspace = 1;
@@ -219,8 +227,12 @@
         "Alt+Minus".action.set-column-width = "-10%";
         "Alt+Equal".action.set-column-width = "+10%";
 
+        # Noctalia controls
+        "Alt+B".action.spawn = [ "noctalia-shell" "ipc" "call" "bar" "toggle" ];
+        "Alt+O".action.spawn = [ "niri" "msg" "action" "toggle-overview" ];
+
         # Power menu
-        "Alt+Shift+E".action.spawn = [ "noctalia-shell" "ipc" "call" "sessionMenu" "toggle" ];
+        "Alt+M".action.spawn = [ "noctalia-shell" "ipc" "call" "sessionMenu" "toggle" ];
       };
 
       # Cursor theme
