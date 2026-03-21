@@ -171,6 +171,7 @@
    wl-clipboard
    cliphist
    networkmanagerapplet
+   wl-mirror
    xwayland-satellite
    polkit_gnome
    quickshell
