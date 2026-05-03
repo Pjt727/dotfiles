@@ -154,6 +154,9 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # Enable nix-ld for running dynamically linked binaries (e.g. uv-managed Python)
+  programs.nix-ld.enable = true;
+
   environment.variables.EDITOR = "nvim";
 
   # List packages installed in system profile. To search, run:
@@ -165,6 +168,7 @@
    vesktop
    heroic
    obs-studio
+   uv
 
    # Niri/Wayland utilities
    swww

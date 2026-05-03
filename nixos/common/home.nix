@@ -161,7 +161,6 @@
         # Window management
         "Alt+F".action.maximize-column = {};
         "Alt+F4".action.close-window = {};
-        "Ctrl+Shift+W".action.close-window = {};
         "Alt+V".action.toggle-window-floating = {};
         "Alt+P".action.switch-preset-column-width = {};
 
@@ -194,6 +193,12 @@
         "Alt+W".action.focus-workspace = 2;
         "Alt+E".action.focus-workspace = 3;
         "Alt+R".action.focus-workspace = 4;
+
+        # Quick move window to workspace
+        "Alt+Shift+Q".action.move-column-to-workspace = 1;
+        "Alt+Shift+W".action.move-column-to-workspace = 2;
+        "Alt+Shift+E".action.move-column-to-workspace = 3;
+        "Alt+Shift+R".action.move-column-to-workspace = 4;
 
         # Move window to workspace
         "Alt+Shift+1".action.move-column-to-workspace = 1;
