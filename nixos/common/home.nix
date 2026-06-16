@@ -15,7 +15,6 @@
     # Wayland session variables
     NIXOS_OZONE_WL = "1";
     QT_QPA_PLATFORM = "wayland";
-    SDL_VIDEODRIVER = "wayland";
     XDG_SESSION_TYPE = "wayland";
     # Dark mode hints for apps that check env vars
     GTK_THEME = "rose-pine";
@@ -453,5 +452,6 @@
 
     # Language toolchains (include formatters)
     go
+    unzip
   ];
 }

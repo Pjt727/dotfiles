@@ -19,8 +19,12 @@
   };
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.configurationLimit = 10;
+  boot.loader.grub = {
+    enable = true;
+    device = "nodev";
+    efiSupport = true;
+    useOSProber = true;
+  };
   boot.loader.efi.canTouchEfiVariables = true;
 
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -55,9 +59,48 @@
   services.xserver.enable = true;
 
   # Display manager (SDDM) with niri as default session
-  services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true;
+    settings = {
+      General = {
+        # Randomly selected purple animal background
+        Background = "/var/lib/sddm-random-bg/current-background.png";
+      };
+    };
+  };
   services.displayManager.defaultSession = "niri";
+
+  # Systemd service to randomly select login background before SDDM starts
+  systemd.services.sddm-random-background = {
+    description = "Randomly select SDDM background from purple animals";
+    wantedBy = [ "display-manager.service" ];
+    before = [ "display-manager.service" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+    script = ''
+      mkdir -p /var/lib/sddm-random-bg
+
+      # Array of available backgrounds
+      backgrounds=(
+        "/home/pjt727/dotfiles/nixos/assets/purple-axolotl-1.png"
+        "/home/pjt727/dotfiles/nixos/assets/purple-axolotl-2.png"
+        "/home/pjt727/dotfiles/nixos/assets/purple-animal-1.png"
+        "/home/pjt727/dotfiles/nixos/assets/purple-animal-2.png"
+        "/home/pjt727/dotfiles/nixos/assets/purple-animal-3.png"
+      )
+
+      # Pick a random background
+      random_bg="''${backgrounds[$RANDOM % ''${#backgrounds[@]}]}"
+
+      # Copy to the location SDDM expects
+      cp "$random_bg" /var/lib/sddm-random-bg/current-background.png
+
+      echo "Selected random background: $random_bg"
+    '';
+  };
 
   # Enable Niri compositor
   programs.niri = {
@@ -106,11 +149,17 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  # Enable Docker
+  virtualisation.docker = {
+    enable = true;
+    enableOnBoot = true;
+  };
+
   # Define a user account. Don't forget to set a password with 'passwd'.
   users.users.pjt727 = {
     isNormalUser = true;
     description = "patrick";
-    extraGroups = [ "networkmanager" "wheel" "video" ];
+    extraGroups = [ "networkmanager" "wheel" "video" "docker" ];
     shell = pkgs.zsh;
     packages = with pkgs; [
     #  thunderbird
