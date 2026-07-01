@@ -11,3 +11,7 @@
 --
 -- vim.api.nvim_set_keymap("n", "<leader>fc", "<cmd>require('kulala').from_curl()<cr>", { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap("n", "<leader>tc", "<cmd>require('kulala').copy()<cr>", { noremap = true, silent = true })
+--
+--
+vim.api.nvim_set_keymap("n", "<leader>e", "<cmd>lua require('kulala').set_selected_env()<cr>",
+    { noremap = true, silent = true })

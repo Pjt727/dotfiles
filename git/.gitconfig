@@ -1,6 +1,7 @@
 [user]
 	email = Patrick@nytyler.com
 	name = Patrick
+	signingkey = B76A00677553ADF8
 [core]
     editor = nvim
 [credential "https://github.com"]
@@ -9,3 +10,9 @@
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !gh auth git-credential
+[pull]
+	rebase = true
+[commit]
+	gpgsign = true
+[gpg]
+	program = gpg

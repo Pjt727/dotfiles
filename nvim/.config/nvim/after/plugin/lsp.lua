@@ -110,6 +110,7 @@ local on_attach = function(client, bufnr)
 
     -- Your original keymaps
     keymap("n", "gd", vim.lsp.buf.definition, opts)
+    keymap("n", "<leader>vri", vim.lsp.buf.implementation, opts)
     keymap("n", "<leader>vrr", vim.lsp.buf.references, opts)
     keymap("n", "K", vim.lsp.buf.hover, opts)
     keymap("n", "<leader>vws", vim.lsp.buf.workspace_symbol, opts)
@@ -130,7 +131,9 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
 -- lua ls
 
-vim.lsp.config("lua_ls", {
+vim.lsp.config.lua_ls = {
+    cmd = { "lua-language-server" },
+    filetypes = { "lua" },
     on_attach = on_attach,
     capabilities = capabilities,
     settings = {
@@ -143,7 +146,7 @@ vim.lsp.config("lua_ls", {
             },
         },
     },
-})
+}
 
 vim.lsp.enable("lua_ls")
 
@@ -156,15 +159,18 @@ vim.lsp.enable("lua_ls")
 
 -- emmet
 
-vim.lsp.config("emmet_language_server", {
+vim.lsp.config.emmet_language_server = {
+    cmd = { "emmet-language-server", "--stdio" },
+    filetypes = { "html", "htmldjango", "templ", "typescriptreact" },
     on_attach = on_attach,
     capabilities = capabilities,
-    filetypes = { "html", "htmldjango", "templ", "typescriptreact" },
-})
+}
 
 vim.lsp.enable("emmet_language_server")
 
 -- golang
+-- NOTE: gopls is managed by kakehashi for SQL injection support
+-- Direct gopls configuration is commented out to avoid conflicts
 
 vim.lsp.config("gopls", {
     on_attach = on_attach,
@@ -175,7 +181,9 @@ vim.lsp.enable("gopls")
 
 -- python
 
-vim.lsp.config("pyright", {
+vim.lsp.config.pyright = {
+    cmd = { "pyright-langserver", "--stdio" },
+    filetypes = { "python" },
     on_attach = on_attach,
     capabilities = capabilities,
     settings = {
@@ -186,50 +194,95 @@ vim.lsp.config("pyright", {
             },
         },
     },
-})
+}
 
 vim.lsp.enable("pyright")
 
 -- typst
 
-vim.lsp.config("tinymist", {
-    on_attach = on_attach,
-    capabilities = capabilities,
-})
-
-vim.lsp.enable("tinymist")
+-- vim.lsp.config("tinymist", {
+--     on_attach = on_attach,
+--     capabilities = capabilities,
+-- })
+--
+-- vim.lsp.enable("tinymist")
 
 -- templ
 
-vim.lsp.config("templ", {
-    on_attach = on_attach,
-    capabilities = capabilities,
-    cmd = { "templ", "lsp" },
-    filetypes = { "templ" },
-    root_dir = require("lspconfig.util").root_pattern("go.mod", ".git"),
-    settings = {},
-})
-
-vim.lsp.enable("templ")
+-- vim.lsp.config("templ", {
+--     on_attach = on_attach,
+--     capabilities = capabilities,
+--     cmd = { "templ", "lsp" },
+--     filetypes = { "templ" },
+--     root_dir = require("lspconfig.util").root_pattern("go.mod", ".git"),
+--     settings = {},
+-- })
+--
+-- vim.lsp.enable("templ")
 
 -- typescript
 
-vim.lsp.config("ts_ls", {
+vim.lsp.config.ts_ls = {
+    cmd = { "typescript-language-server", "--stdio" },
+    filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
     on_attach = on_attach,
     capabilities = capabilities,
-})
+}
 
 vim.lsp.enable("ts_ls")
 
 -- harper
 
-vim.lsp.config("harper_ls", {
+vim.lsp.config.harper_ls = {
+    cmd = { "harper-ls", "--stdio" },
     filetypes = { "markdown", "typst" },
     on_attach = on_attach,
     capabilities = capabilities,
-})
+}
 
 vim.lsp.enable("harper_ls")
+
+-- postgres
+
+vim.lsp.config.postgres_lsp = {
+    cmd = { "postgrestools", "lsp-proxy" },
+    filetypes = { "sql" },
+    on_attach = on_attach,
+    capabilities = capabilities,
+}
+vim.lsp.enable("postgres_lsp")
+
+-- kakehasi <> golang to use postgres injections
+-- vim.lsp.config.kakehashi = {
+--     cmd = { "kakehashi" },
+--     filetypes = { "go", "sql" },
+--     init_options = {
+--         autoInstall = true,
+--         languageServers = {
+--             gopls = {
+--                 cmd = { "gopls" },
+--                 languages = { "go" },
+--             },
+--             postgres_lsp = {
+--                 cmd = { "postgrestools", "lsp-proxy" },
+--                 languages = { "sql" },
+--             },
+--         },
+--         languages = {
+--             go = {
+--                 bridge = {
+--                     sql = {
+--                         enabled = true
+--                     }
+--                 }
+--             },
+--         },
+--     },
+--     on_attach = on_attach,
+--     capabilities = capabilities,
+-- }
+
+vim.lsp.enable("kakehashi")
 
 -- java
 

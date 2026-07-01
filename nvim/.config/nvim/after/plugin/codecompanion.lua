@@ -25,7 +25,7 @@ require("codecompanion").setup({
     },
     strategies = {
         inline = {
-            adapter = "gemini",
+            adapter = "anthropic",
             keymaps = {
                 accept_change = {
                     modes = { n = "ga" },
@@ -38,7 +38,7 @@ require("codecompanion").setup({
             },
         },
         chat = {
-            adapter = "gemini",
+            adapter = "anthropic",
             keymaps = {
                 close = {
                     modes = { n = "<C-m>", i = "<C-m>" },
@@ -61,24 +61,13 @@ require("codecompanion").setup({
     },
     adapters = {
         http = {
-            llama3 = function()
-                return require("codecompanion.adapters").extend("gemini", {
-                    name = "gem",
-                    schema = {
-                        model = {
-                            default = "gemini-2.5-pro",
-                        },
-                        -- num_ctx = {
-                        --   default = 16384,
-                        -- },
-                        -- num_predict = {
-                        --   default = -1,
-                        -- },
+            anthropic = function()
+                return require("codecompanion.adapters").extend("anthropic", {
+                    env = {
+                        api_key = "NVIM_ANTHROPIC_API_KEY",
                     },
                 })
             end,
-        },
-        acp = {
             claude_code = function()
                 return require("codecompanion.adapters").extend("claude_code", {
                     env = {

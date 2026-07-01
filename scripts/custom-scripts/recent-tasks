@@ -1,0 +1,33 @@
+#!/bin/bash
+set -euo pipefail
+
+TASKS_FILE="$HOME/tasks.csv"
+
+if [[ ! -f "$TASKS_FILE" ]]; then
+  echo "No tasks file found at $TASKS_FILE"
+  exit 0
+fi
+
+print_most_recent() {
+  local job_type="$1"
+  local result
+  result=$(awk -F, -v job="$job_type" '
+    NR > 1 && $1 == job {
+      # Strip surrounding quotes from NOTE field
+      note = $3
+      gsub(/^"|"$/, "", note)
+      print $2 " - " note
+      exit
+    }
+  ' "$TASKS_FILE")
+
+  if [[ -z "$result" ]]; then
+    printf "%-10s  (none)\n" "$job_type"
+  else
+    printf "%-10s  %s\n" "$job_type" "$result"
+  fi
+}
+
+print_most_recent "MONTHLY"
+print_most_recent "BIWEEKLY"
+print_most_recent "WEEKLY"

@@ -120,8 +120,9 @@ local plugins = {
         "kristijanhusak/vim-dadbod-ui",
         event = "VeryLazy",
         dependencies = {
-            { "tpope/vim-dadbod",                     lazy = true },
-            { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
+            { "tpope/vim-dadbod", lazy = true },
+            -- currently using postgres lsp instead
+            -- { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
         },
         cmd = {
             "DBUI",
@@ -250,6 +251,30 @@ local plugins = {
         dependencies = "rcarriga/nvim-notify", -- optional
         opts = {},                             -- required even with default settings, since it calls `setup()`
     },
+    {
+        'jmbuhr/otter.nvim',
+        dependencies = {
+            'nvim-treesitter/nvim-treesitter',
+        },
+        opts = {},
+    },
+    {
+        "afewyards/codereview.nvim",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        cmd = {
+            "CodeReview",
+            "CodeReviewAI",
+            "CodeReviewAIFile",
+            "CodeReviewStart",
+            "CodeReviewSubmit",
+            "CodeReviewApprove",
+            "CodeReviewOpen",
+            "CodeReviewPipeline",
+            "CodeReviewComments",
+            "CodeReviewFiles",
+        },
+        opts = {},
+    }
 }
 
 local opts = {}

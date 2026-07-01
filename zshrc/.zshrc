@@ -15,6 +15,8 @@ export PATH="$BUNNSTALL/bin:$PATH"
 # nnn plugins
 export NNN_PLUG="f:autojump;p:preview-tui"
 export NNN_FIFO=/tmp/nnn.fifo
+# nvim
+export EDITOR=nvim
 
 # secrets
 source "$HOME/secrets.zsh"
@@ -187,3 +189,4 @@ export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+export GPG_TTY=$(tty)

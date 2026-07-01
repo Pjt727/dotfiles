@@ -1,0 +1,12 @@
+[languageServers.gopls]
+cmd = ["gopls"]
+languages = ["go"]
+
+[languageServers.postgres_lsp]
+cmd = ["postgrestools", "lsp-proxy"]
+languages = ["sql"]
+
+[languages.go]
+queries = [
+  { path = "/Users/pjt727/dotfiles/nvim/.config/nvim/queries/go/injections.scm", kind = "injections" }
+]

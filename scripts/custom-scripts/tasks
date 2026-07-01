@@ -10,7 +10,7 @@ fi
 
 
 if [[ ! -f "$HOME/tasks.csv" ]]; then
-  echo "MBW"   # no tasks yet → nothing to show in prompt
+  echo -n ""   # no tasks yet → nothing to show in prompt
   exit 0
 fi
 
@@ -27,7 +27,7 @@ needs_job() {
     return 0
   fi
 
-  last_secs=$(date -d "$last_date" +%s)
+  last_secs=$(date -jf "%Y-%m-%d" "$last_date" +%s)
   today_secs=$(date +%s)
   diff_days=$(( (today_secs - last_secs) / 86400 ))
 

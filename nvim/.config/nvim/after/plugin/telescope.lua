@@ -52,12 +52,18 @@ local function pick_database()
             actions.select_default:replace(function()
                 actions.close(prompt_bufnr)
                 local selection = action_state.get_selected_entry()
-                vim.g.db = selection.value
+                SetDatabaseForAllSources(selection.value)
                 print("Database set to: " .. selection.display)
             end)
             return true
         end,
     }):find()
+end
+
+function SetDatabaseForAllSources(databaseUrl)
+    vim.g.db = databaseUrl
+    -- maybe do other thinggs like this
+    -- vim.env.DATABASE_URL = databaseUrl
 end
 
 vim.keymap.set("n", "<leader>dl", pick_database, { desc = "Pick a database" })
