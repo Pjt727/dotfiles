@@ -47,6 +47,10 @@ require("lualine").setup({
                         if prod_hostname then
                             hostname_to_env[prod_hostname] = "‼️🚨PROD🚨‼️"
                         end
+                        local prod_replica_hostname = os.getenv("PROD_REPLICA_DB")
+                        if prod_replica_hostname then
+                            hostname_to_env[prod_replica_hostname] = "📖 PROD Replica 🔁"
+                        end
 
 
                         local db = vim.g.db

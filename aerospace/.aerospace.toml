@@ -1,12 +1,15 @@
 # Reference: https://github.com/i3/i3/blob/next/etc/config
 start-at-login = true
 
-# i3 doesn't have "normalizations" feature, that’s why we disable them here.
+# i3 doesn’t have "normalizations" feature, that’s why we disable them here.
 enable-normalization-flatten-containers = false
 enable-normalization-opposite-orientation-for-nested-containers = false
 
 # Mouse follows focus when focused monitor changes
-on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+on-focused-monitor-changed = ["move-mouse monitor-lazy-center"]
+
+[key-mapping]
+preset = 'qwerty'
 
 [mode.main.binding]
     # application binds

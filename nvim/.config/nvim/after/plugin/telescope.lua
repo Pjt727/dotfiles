@@ -13,9 +13,10 @@ local action_state = require("telescope.actions.state")
 
 -- Define the environments and their labels
 local db_envs = {
-    DEV  = "dev 🏗️",
-    QA   = "qa 🧪",
-    PROD = "‼️🚨PROD🚨‼️",
+    DEV          = "dev 🏗️",
+    QA           = "qa 🧪",
+    PROD         = "‼️🚨PROD🚨‼️",
+    PROD_REPLICA = "📖 PROD Replica 🔁",
 }
 local pickerOptions = {}
 
