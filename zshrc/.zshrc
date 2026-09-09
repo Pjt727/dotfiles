@@ -45,6 +45,9 @@ alias bd="brightnessctl set 10%-"
 alias cat="bat"
 alias note="$HOME/custom-scripts/note.zsh"
 
+# git worktree manager
+source "$HOME/custom-scripts/gwt.zsh"
+
 spell() {
   local query="$1"
   if [ -z "$query" ]; then
@@ -190,3 +193,4 @@ export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 export GPG_TTY=$(tty)
+export PATH="$HOME/.local/bin:$PATH"
