@@ -1,20 +1,12 @@
+-- No formatter args here. `ruff format` uses the closest ruff.toml / [tool.ruff]
+-- pyproject.toml for the file. Personal defaults live in
+-- ~/.config/ruff/pyproject.toml and apply only when a project has no Ruff config.
+-- CLI flags like --line-length would override the project file.
 require("conform").setup({
-    formatters = {
-        black = {
-            command = "black",
-            args = {
-                "--exclude", "migrations",
-                "--line-length", "80",
-                "-" -- important: tells black to read from stdin
-            },
-            stdin = true,
-        },
-    },
     formatters_by_ft = {
         -- Conform will run multiple formatters sequentially
         lua = { "stylua" },
-        -- python = { "ruff_format" },
-        python = { "black" },
+        python = { "ruff_format" },
         hmtl = { "prettierd" },
         javascript = { "prettierd" },
         rust = { "rustfmt" },

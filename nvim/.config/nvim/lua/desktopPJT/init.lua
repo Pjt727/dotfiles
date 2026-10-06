@@ -14,6 +14,7 @@ require("desktopPJT.lazy")
 
 require("desktopPJT.remap")
 require("desktopPJT.set")
+require("desktopPJT.snapshots").setup()
 
 
 

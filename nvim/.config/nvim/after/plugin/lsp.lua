@@ -21,6 +21,10 @@ vim.diagnostic.config({
     virtual_text = true,
 })
 
+-- Must stay below vim.hl.priorities.treesitter (100), otherwise gopls' `string`
+-- semantic token paints over the sql/json injections inside Go raw strings.
+vim.hl.priorities.semantic_tokens = 95
+
 -- =============================================================================
 -- Completion Setup (nvim-cmp)
 -- =============================================================================
@@ -169,8 +173,7 @@ vim.lsp.config.emmet_language_server = {
 vim.lsp.enable("emmet_language_server")
 
 -- golang
--- NOTE: gopls is managed by kakehashi for SQL injection support
--- Direct gopls configuration is commented out to avoid conflicts
+-- SQL inside Go strings is handled by otter + postgres_lsp, not by a bridge server
 
 vim.lsp.config("gopls", {
     on_attach = on_attach,
@@ -180,23 +183,31 @@ vim.lsp.config("gopls", {
 vim.lsp.enable("gopls")
 
 -- python
+-- ty owns type checking, hover, and go-to-definition.
+-- ruff owns lint diagnostics and quick fixes.
 
-vim.lsp.config.pyright = {
-    cmd = { "pyright-langserver", "--stdio" },
+vim.lsp.config.ty = {
+    cmd = { "ty", "server" },
     filetypes = { "python" },
+    root_markers = { "ty.toml", "pyproject.toml", "setup.py", "setup.cfg", "requirements.txt", ".git" },
     on_attach = on_attach,
     capabilities = capabilities,
-    settings = {
-        pyright = {
-            plugins = {
-                pycodestyle = { enabled = false },
-                pylint = { enabled = false },
-            },
-        },
-    },
 }
 
-vim.lsp.enable("pyright")
+vim.lsp.enable("ty")
+
+vim.lsp.config.ruff = {
+    cmd = { "ruff", "server" },
+    filetypes = { "python" },
+    root_markers = { "pyproject.toml", "ruff.toml", ".ruff.toml", ".git" },
+    on_attach = function(client, bufnr)
+        client.server_capabilities.hoverProvider = false
+        on_attach(client, bufnr)
+    end,
+    capabilities = capabilities,
+}
+
+vim.lsp.enable("ruff")
 
 -- typst
 
@@ -247,42 +258,13 @@ vim.lsp.enable("harper_ls")
 vim.lsp.config.postgres_lsp = {
     cmd = { "postgrestools", "lsp-proxy" },
     filetypes = { "sql" },
+    -- lspconfig defaults this to true behind a postgres-language-server.jsonc
+    -- root marker, which never exists for otter's sql buffers inside Go files
+    workspace_required = false,
     on_attach = on_attach,
     capabilities = capabilities,
 }
 vim.lsp.enable("postgres_lsp")
-
--- kakehasi <> golang to use postgres injections
--- vim.lsp.config.kakehashi = {
---     cmd = { "kakehashi" },
---     filetypes = { "go", "sql" },
---     init_options = {
---         autoInstall = true,
---         languageServers = {
---             gopls = {
---                 cmd = { "gopls" },
---                 languages = { "go" },
---             },
---             postgres_lsp = {
---                 cmd = { "postgrestools", "lsp-proxy" },
---                 languages = { "sql" },
---             },
---         },
---         languages = {
---             go = {
---                 bridge = {
---                     sql = {
---                         enabled = true
---                     }
---                 }
---             },
---         },
---     },
---     on_attach = on_attach,
---     capabilities = capabilities,
--- }
-
-vim.lsp.enable("kakehashi")
 
 -- java
 
